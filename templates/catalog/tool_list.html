@@ -1,46 +1,70 @@
-{% extends 'base.html' %}
-{% block title %}Tools{% endblock %}
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Alle Tools" %}{% endblock %}
+{% block meta_title %}<title>{{ title }} – {{ SITE_NAME }}</title>{% endblock %}
+{% block meta_description %}
+    <meta name="description" content="{% trans 'Übersichtsseite' %} {{ title }}">{% endblock %}
+
 {% block content %}
-    <section class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
-        <div>
-            <h1 class="text-2xl font-bold">Alle Tools</h1>
-            <p class="text-base-content/70">Vergleiche KI-Tools nach Kategorien, Preis und Free-Tier.</p>
-        </div>
-        <form method="get" class="flex gap-2">
-            <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Suche…" class="input input-bordered"/>
-            <select name="cat" class="select select-bordered">
-                <option value="">Alle Kategorien</option>
-                {% for c in category_list %}
-                    <option value="{{ c.slug }}"
-                            {% if request.GET.cat == c.slug %}selected{% endif %}>{{ c.name }}</option>
+    {% include "partials/breadcrumbs.html" %}
+
+    <header class="mb-6">
+        <h1 class="text-3xl font-bold">{% trans "Alle Tools" %}</h1>
+        <form method="get" class="mt-4 grid gap-3 md:grid-cols-3">
+            <input type="search" name="q" value="{{ q|default_if_none:'' }}" placeholder="{% trans 'Suchen…' %}"
+                   class="input input-bordered w-full"/>
+            <select name="language" class="select select-bordered w-full">
+                <option value="">{% trans "Alle Sprachen" %}</option>
+                {% for lang in available_languages %}
+                    <option value="{{ lang }}" {% if language == lang %}selected{% endif %}>{{ lang }}</option>
                 {% endfor %}
             </select>
-            <button class="btn btn-primary" type="submit">Filtern</button>
+            <label class="label cursor-pointer justify-start gap-3">
+                <input type="checkbox" class="checkbox" name="free" value="1" {% if free %}checked{% endif %}/>
+                <span class="label-text">{% trans "Nur mit Free-Tier" %}</span>
+            </label>
+            <div class="md:col-span-3 flex gap-2">
+                <button class="btn btn-primary">{% trans "Filtern" %}</button>
+                {% if q or language or free %}
+                    <a href="." class="btn">{% trans "Zurücksetzen" %}</a>
+                {% endif %}
+            </div>
         </form>
-    </section>
+    </header>
 
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {% for t in tools %}
-            <div class="card bg-base-100 shadow hover:shadow-lg transition">
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {% for t in object_list %}
+            <article class="card bg-base-100 shadow hover:shadow-lg transition">
                 <div class="card-body">
                     <h2 class="card-title">
-                        <a href="/tools/{{ t.slug }}/" class="link link-hover">{{ t.name }}</a>
-                        {% if t.free_tier %}
-                            <div class="badge badge-success">Free</div>{% endif %}
+                        <a class="link link-hover" href="{% url 'catalog:tool_detail' slug=t.slug %}">{{ t.name }}</a>
                     </h2>
-                    <p class="line-clamp-2">{{ t.short_desc }}</p>
-                    <div class="flex gap-2 flex-wrap mt-2">
-                        {% for c in t.categories.all %}
-                            <div class="badge badge-outline">{{ c.name }}</div>
-                        {% endfor %}
+                    {% if t.short_desc %}<p class="line-clamp-3">{{ t.short_desc }}</p>{% endif %}
+
+                    <div class="mt-3 flex flex-wrap items-center gap-2 text-sm">
+                        {% if t.free_tier %}<span class="badge badge-success">Free Tier</span>{% endif %}
+                        {% if t.pricing_model %}
+                            <span class="badge badge-outline">{{ t.pricing_model }}</span>{% endif %}
+                        {% if t.language_support %}
+                            {% for lang in t.language_support|slice:":3" %}
+                                <span class="badge badge-outline">{{ lang }}</span>
+                            {% endfor %}
+                        {% endif %}
                     </div>
-                    <div class="card-actions justify-end mt-3">
-                        <a href="/tools/{{ t.slug }}/" class="btn btn-sm btn-secondary">Details</a>
+
+                    <div class="card-actions justify-end mt-4">
+                        <a href="{% url 'catalog:tool_detail' slug=t.slug %}"
+                           class="btn btn-sm btn-primary">{% trans "Details" %}</a>
                     </div>
                 </div>
-            </div>
+            </article>
         {% empty %}
-            <div class="alert">Keine Tools gefunden.</div>
+            <div class="col-span-full alert">
+                <span>{% trans "Keine Tools gefunden." %}</span>
+            </div>
         {% endfor %}
     </div>
+
+    {% include "partials/pagination.html" %}
 {% endblock %}

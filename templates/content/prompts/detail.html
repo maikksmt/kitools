@@ -1,10 +1,89 @@
-{% extends 'base.html' %}
-{% block title %}{{ item.title }}{% endblock %}
+{% extends "base.html" %} {% load i18n %}
+{% block title %}{{ object.title }}{% endblock %}
 {% block content %}
-    <h1>{{ item.title }}</h1>
-    <pre>{{ item.body }}</pre>
-    {% if item.examples %}
-        <h3>Beispiele</h3>
-        <pre>{{ item.examples|json_script:'ex' }}</pre>
+    {% include "partials/breadcrumbs.html" %}
+
+    <article class="prose max-w-none">
+        <header class="mb-6">
+            <h1 class="text-3xl font-bold">{{ object.title }}</h1>
+            <div
+                    class="mt-2 flex flex-wrap items-center gap-3 text-sm text-base-content/70"
+            >
+                {% if object.published_at %}
+                    <time
+                            datetime="{{ object.published_at|date:'c' }}"
+                    >📅 {{ object.published_at|date:"d.m.Y" }}</time
+                    >{% endif %}
+            </div>
+        </header>
+
+        {% if object.use_case %}
+            <p class="text-base-content/80">
+                <strong>{% trans "Use Case:" %}</strong> {{ object.use_case }}
+            </p>
+        {% endif %}
+
+        <section class="my-6">
+            <h2 class="text-2xl font-semibold mb-2">{% trans "Prompt" %}</h2>
+            <pre class="bg-base-200 p-4 rounded max-w-full overflow-x-auto">
+{{ object.body }}</pre
+            >
+        </section>
+
+        {% if object.examples %}
+            <section class="my-6">
+                <h2 class="text-2xl font-semibold mb-2">{% trans "Beispiele" %}</h2>
+                <div class="space-y-3">
+                    {% for ex in object.examples %}
+                        <pre class="bg-base-200 p-3 rounded max-w-full overflow-x-auto">
+{{ ex }}</pre
+                        >
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %} {% if object.tools.all %}
+        <section class="my-6">
+            <h2 class="text-2xl font-semibold mb-2">{% trans "Passende Tools" %}</h2>
+            <div class="flex flex-wrap gap-2">
+                {% for t in object.tools.all %}
+                    <a
+                            href="{% url 'catalog:tool_detail' slug=t.slug %}"
+                            class="badge badge-outline"
+                    >{{ t.name }}</a
+                    >
+                {% empty %}
+                    <span class="text-base-content/70"
+                    >{% trans "Keine Tools verknüpft." %}</span
+                    >
+                {% endfor %}
+            </div>
+        </section>
     {% endif %}
-{% endblock %}
+    </article>
+
+    {% if more %}
+        <section class="mt-10">
+            <h2 class="text-2xl font-semibold mb-4">{% trans "Weitere Prompts" %}</h2>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {% for it in more %}
+                    <article class="card bg-base-100 shadow">
+                        <div class="card-body">
+                            <h3 class="card-title text-base">
+                                <a
+                                        href="{% url 'prompts:detail' slug=it.slug %}"
+                                        class="link link-hover"
+                                >{{ it.title }}</a
+                                >
+                            </h3>
+                            {% if it.published_at %}
+                                <time
+                                        class="text-sm text-base-content/70"
+                                        datetime="{{ it.published_at|date:'c' }}"
+                                >{{ it.published_at|date:"d.m.Y" }}</time
+                                >{% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %} {% endblock %}

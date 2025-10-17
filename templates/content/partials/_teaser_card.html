@@ -1,0 +1,14 @@
+<div class="card bg-base-100 border rounded-2xl">
+    <div class="card-body">
+        {% if item.badge %}
+            <div class="badge badge-neutral mb-2">{{ item.badge }}</div>
+        {% endif %}
+        <a href="{{ item.url }}" class="card-title text-base hover:link">{{ item.title }}</a>
+        {% if item.teaser %}
+            <p class="text-sm opacity-80">{{ item.teaser }}</p>
+        {% endif %}
+        <div class="card-actions justify-end mt-4">
+            <a href="{{ item.url }}" class="btn btn-sm btn-outline">{% trans "Lesen" %}</a>
+        </div>
+    </div>
+</div>

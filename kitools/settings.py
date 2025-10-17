@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'django.contrib.sitemaps',
     # Drittanbieter
     'rest_framework',
     'taggit',
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -72,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'kitools.context_processors.seo_site',
             ],
             "builtins": [
                 "heroicons.templatetags.heroicons",
@@ -125,6 +128,11 @@ LANGUAGE_CODE = 'de'
 TIME_ZONE = 'Europe/Berlin'
 USE_I18N = True
 USE_TZ = True
+LANGUAGES = (
+    ("de", "Deutsch"),
+    ("en", "English"),
+)
+LOCALE_PATHS = [BASE_DIR / "locale"]
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
@@ -143,3 +151,8 @@ CELERY_RESULT_BACKEND = os.getenv(
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny'],
 }
+
+# --- SEO / Site Info ---
+SITE_NAME = "KI Tools"
+# Stelle sicher, dass die Domain hier korrekt ist (Prod-Domain nehmen)
+SITE_URL = "https://www.example.com"

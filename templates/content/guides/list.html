@@ -1,0 +1,74 @@
+{% extends "base.html" %} {% load i18n static %} {% block title %}
+    {% trans "Guides" %}{% endblock %} {% block meta_title %}<title>
+    {{ title }} – {{ SITE_NAME }}</title
+>{% endblock %} {% block meta_description %}
+    <meta
+            name="description"
+            content="{% trans 'Übersichtsseite' %} {{ title }}"
+    />{% endblock %} {% block content %} {% include "partials/breadcrumbs.html" %}
+
+    <header class="mb-6">
+        <h1 class="text-3xl font-bold">{% trans "Guides" %}</h1>
+        <p class="text-base-content/70 mt-2">
+            {% trans "Schritt-für-Schritt-Anleitungen zu KI-Themen – verständlich und praxisnah." %}
+        </p>
+    </header>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {% for obj in object_list %}
+            <article class="card bg-base-100 shadow-md hover:shadow-lg transition">
+                <figure class="aspect-[16/9] bg-base-200 overflow-hidden">
+                    {% if obj.hero_image %}
+                        <img
+                                src="{{ obj.hero_image.url }}"
+                                alt="{{ obj.title }}"
+                                class="w-full h-full object-cover"
+                                loading="lazy"
+                        />
+                    {% else %}
+                        <img
+                                src="{% static 'css/tailwindcss/placeholder-16x9.png' %}"
+                                alt="{% trans 'Platzhalterbild' %}"
+                                class="w-full h-full object-cover"
+                                loading="lazy"
+                        />
+                    {% endif %}
+                </figure>
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <a
+                                href="{% url 'guides:detail' slug=obj.slug %}"
+                                class="link link-hover"
+                        >{{ obj.title }}</a
+                        >
+                    </h2>
+                    {% if obj.excerpt %}
+                        <p class="line-clamp-3">{{ obj.excerpt }}</p>
+                    {% endif %}
+                    <div
+                            class="mt-2 flex flex-wrap items-center gap-3 text-sm text-base-content/70"
+                    >
+                        {% if obj.reading_time %}<span>⏱ {{ obj.reading_time }}&nbsp;min</span
+                        >{% endif %} {% if obj.published_at %}
+                        <time
+                                datetime="{{ obj.published_at|date:'c' }}"
+                        >📅 {{ obj.published_at|date:"d.m.Y" }}</time
+                        >{% endif %}
+                    </div>
+                    <div class="card-actions justify-end mt-4">
+                        <a
+                                href="{% url 'guides:detail' slug=obj.slug %}"
+                                class="btn btn-primary btn-sm"
+                        >{% trans "Weiterlesen" %}</a
+                        >
+                    </div>
+                </div>
+            </article>
+        {% empty %}
+            <div class="col-span-full alert">
+                <span>{% trans "Keine veröffentlichten Guides vorhanden." %}</span>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% include "partials/pagination.html" %} {% endblock %}

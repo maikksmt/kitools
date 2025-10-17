@@ -1,9 +1,9 @@
 from django.urls import path
-from . import views_guides
+from . import views_guides as views
 
 app_name = 'guides'
 
 urlpatterns = [
-    path('', views_guides.index, name='index'),
-    path('<slug:slug>/', views_guides.detail, name='detail'),
+    path('', views.guide_list, name='list'),
+    path('<slug:slug>/', views.guide_detail, name='detail'),
 ]

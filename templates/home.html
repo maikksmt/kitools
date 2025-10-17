@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n static heroicons %}
+
+{% block meta_title %}<title>{{ title }}</title>{% endblock %}
+{% block meta_description %}
+    <meta name="description" content="{{ seo_description }}">{% endblock %}
+
+{% block content %}
+
+    <!-- Intro / Hero -->
+    <section class="container mx-auto px-4 mt-8">
+        <div class="hero bg-base-200 rounded-2xl">
+            <div class="hero-content py-10">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-3">
+                        {% trans "KI Tools Web" %} — {% trans "Tools, Vergleiche & Praxis" %}
+                    </h1>
+                    <p class="text-base md:text-lg opacity-80 max-w-2xl">
+                        {% trans "Finde passende KI-Tools, vergleiche Alternativen und nutze praxisnahe Guides & Prompts." %}
+                    </p>
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <a href="/tools/" class="btn btn-primary">
+                            {% heroicon_solid "squares-2x2" size=20 class="mr-2" %}{% trans "Zum Katalog" %}
+                        </a>
+                        <a href="/vergleiche/" class="btn btn-outline">
+                            {% heroicon_solid "adjustments-vertical" size=20 class="mr-2" %}{% trans "Vergleiche" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Einstiegskarten -->
+    <section class="container mx-auto px-4 mt-10">
+        <h2 class="text-xl font-semibold mb-4">{% trans "Direkteinstieg" %}</h2>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {% for c in entry_cards %}
+                {% include "content/partials/_entry_card.html" with card=c %}
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Aktuelle Inhalte -->
+    <section class="container mx-auto px-4 mt-12 mb-16">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-semibold">{% trans "Aktuelle Artikel & Guides" %}</h2>
+            <a href="/guides/" class="link link-primary">{% trans "Alle Guides" %}</a>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {% for item in latest_items %}
+                {% include "content/partials/_teaser_card.html" with item=item %}
+            {% empty %}
+                <div class="alert">
+                    {% heroicon_solid "information-circle" size=20 class="mr-2" %}
+                    <span>{% trans "Noch keine veröffentlichten Inhalte vorhanden." %}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %} {% load i18n %}
+{% block title %}{% trans "Prompts" %}{% endblock %} {% block meta_title %}
+    <title>
+        {{ title }} – {{ SITE_NAME }}</title
+    >{% endblock %} {% block meta_description %}
+    <meta
+            name="description"
+            content="{% trans 'Übersichtsseite' %} {{ title }}"
+    />{% endblock %} {% block content %} {% include "partials/breadcrumbs.html" %}
+
+    <header class="mb-6">
+        <h1 class="text-3xl font-bold">{% trans "Prompts" %}</h1>
+        <form method="get" class="mt-4 flex gap-2">
+            <input
+                    type="search"
+                    name="q"
+                    value="{{ q }}"
+                    placeholder="{% trans 'Suchen…' %}"
+                    class="input input-bordered w-full max-w-md"
+            />
+            <button class="btn btn-primary">{% trans "Suchen" %}</button>
+        </form>
+    </header>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {% for obj in object_list %}
+            <article class="card bg-base-100 shadow hover:shadow-lg transition">
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <a
+                                href="{% url 'prompts:detail' slug=obj.slug %}"
+                                class="link link-hover"
+                        >{{ obj.title }}</a
+                        >
+                    </h2>
+                    {% if obj.use_case %}
+                        <p class="text-sm text-base-content/70">{{ obj.use_case }}</p>
+                    {% endif %} {% if obj.examples and obj.examples.0 %}
+                    <pre class="bg-base-200 p-3 rounded text-sm overflow-x-auto line-clamp-5">
+{{ obj.examples.0 }}</pre
+                    >
+                {% else %}
+                    <p class="line-clamp-3">{{ obj.body|truncatechars:200 }}</p>
+                {% endif %}
+
+                    <div class="card-actions justify-between items-center mt-4">
+                        <div class="text-sm text-base-content/70">
+                            {% if obj.published_at %}
+                                <time
+                                        datetime="{{ obj.published_at|date:'c' }}"
+                                >📅 {{ obj.published_at|date:"d.m.Y" }}</time
+                                >{% endif %}
+                        </div>
+                        <a
+                                href="{% url 'prompts:detail' slug=obj.slug %}"
+                                class="btn btn-sm btn-primary"
+                        >{% trans "Details" %}</a
+                        >
+                    </div>
+                </div>
+            </article>
+        {% empty %}
+            <div class="col-span-full alert">
+                <span>{% trans "Keine veröffentlichten Prompts gefunden." %}</span>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% include "partials/pagination.html" %} {% endblock %}

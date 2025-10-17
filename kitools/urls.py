@@ -18,14 +18,53 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
+from django.views.i18n import set_language
+from django.contrib.sitemaps.views import sitemap
+from django.views.generic import TemplateView
+
+from content.sitemaps import GuideSitemap, PromptSitemap, UseCaseSitemap
+from catalog.sitemaps import ToolSitemap
+from compare.sitemaps import ComparisonSitemap
+from content.views import HomePageView
+
+sitemaps = {
+    "guides": GuideSitemap,
+    "prompts": PromptSitemap,
+    "usecases": UseCaseSitemap,
+    "tools": ToolSitemap,
+    "comparisons": ComparisonSitemap,
+}
 
 urlpatterns = [
-                  path('admin/', admin.site.urls),
-                  path('', include('catalog.urls')),  # Home & Tools
-                  path('guides/', include('content.urls_guides')),
-                  path('prompts/', include('content.urls_prompts')),
-                  path('use-cases/', include('content.urls_usecases')),
-                  path('vergleiche/', include('compare.urls')),
-                  path('newsletter/', include('newsletter.urls')),
-                  path('api/', include('api.urls')),
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("i18n/setlang/", set_language, name="set_language"),
+]
+
+urlpatterns += i18n_patterns(
+    path("admin/", admin.site.urls),
+    path("", HomePageView.as_view(), name="home"),
+    path("tools/", include("catalog.urls")),  # Home & Tools
+    path("guides/", include("content.urls_guides")),
+    path("prompts/", include("content.urls_prompts")),
+    path("use-cases/", include("content.urls_usecases")),
+    path("vergleiche/", include("compare.urls")),
+    path("newsletter/", include("newsletter.urls")),
+    # path("api/", include("api.urls")),
+)
+
+urlpatterns += [
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps},
+         name="django.contrib.sitemaps.views.sitemap"),
+    path(
+        "robots.txt",
+        TemplateView.as_view(
+            template_name="robots.txt",
+            content_type="text/plain",
+        ),
+        name="robots_txt",
+    ),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

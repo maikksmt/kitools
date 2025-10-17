@@ -1,38 +1,58 @@
-{% extends 'base.html' %}
-{% block title %}Start · KI-Tools{% endblock %}
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}
+    {% trans "KI-Tool Katalog" %}
+{% endblock %}
 {% block content %}
-    <section class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold">Empfohlene Tools</h1>
-        <a href="/tools/" class="btn btn-sm btn-primary">Alle Tools</a>
-    </section>
+    {% include "partials/breadcrumbs.html" %}
 
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {% for t in featured %}
-            <div class="card bg-base-100 shadow hover:shadow-lg transition">
+    <header class="mb-8">
+        <h1 class="text-3xl font-bold">{% trans "KI-Tool Katalog" %}</h1>
+        <p class="text-base-content/70 mt-2">
+            {% trans "Finde geeignete KI-Werkzeuge nach Einsatzzweck, Sprache und Budget." %}
+        </p>
+    </header>
+
+    <section class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {% if featured_tools %} {% for t in featured_tools %}
+            <article class="card bg-base-100 shadow hover:shadow-lg transition">
                 <div class="card-body">
                     <h2 class="card-title">
-                        <a href="/tools/{{ t.slug }}/" class="link link-hover">{{ t.name }}</a>
-                        {% if t.free_tier %}
-                            <div class="badge badge-success">Free-Tier</div>{% endif %}
+                        <a
+                                class="link link-hover"
+                                href="{% url 'catalog:tool_detail' slug=t.slug %}"
+                        >{{ t.name }}</a
+                        >
                     </h2>
-                    <p class="line-clamp-2">{{ t.short_desc }}</p>
-                    <div class="card-actions justify-between items-center mt-2">
-                        <div class="badge badge-outline">{{ t.vendor|default:"" }}</div>
-                        <a href="/tools/{{ t.slug }}/" class="btn btn-sm btn-secondary">Details</a>
+                    {% if t.short_desc %}
+                        <p class="line-clamp-3">{{ t.short_desc }}</p>
+                    {% endif %}
+                    <div class="flex flex-wrap gap-2 mt-3 text-sm">
+                        {% if t.free_tier %}
+                            <span class="badge badge-success">Free Tier</span>
+                        {% endif %} {% if t.language_support %} {% for lang in t.language_support %}
+                        <span class="badge badge-outline">{{ lang }}</span>
+                    {% endfor %} {% endif %}
+                    </div>
+                    <div class="card-actions justify-end mt-4">
+                        <a
+                                href="{% url 'catalog:tool_detail' slug=t.slug %}"
+                                class="btn btn-primary btn-sm"
+                        >{% trans "Details" %}</a
+                        >
                     </div>
                 </div>
+            </article>
+        {% endfor %} {% else %}
+            <div class="col-span-full alert">
+                <span>{% trans "Noch keine Highlights definiert." %}</span>
             </div>
-        {% empty %}
-            <div class="alert">Noch keine Empfehlungen.</div>
-        {% endfor %}
-    </div>
+        {% endif %}
+    </section>
 
-    <h2 class="text-xl font-semibold mt-10 mb-4">Neu hinzugefügt</h2>
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {% for t in latest %}
-            <a href="/tools/{{ t.slug }}/" class="btn btn-outline justify-start">{{ t.name }}</a>
-        {% empty %}
-            <div class="alert">Keine neuen Tools.</div>
-        {% endfor %}
+    <div class="mt-10">
+        <a class="btn btn-secondary" href="{% url 'catalog:tool_list' %}"
+        >{% trans "Alle Tools anzeigen" %}</a
+        >
     </div>
 {% endblock %}

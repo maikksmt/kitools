@@ -1,7 +1,83 @@
-{% extends 'base.html' %}
-{% block title %}{{ item.title }}{% endblock %}
-{% block content %}
-    <h1>{{ item.title }}</h1>
-    <p>{{ item.excerpt }}</p>
-    <div>{{ item.body|linebreaks }}</div>
+{% extends "base.html" %} {% load i18n static %} {% block meta_title %}<title>
+    {{ object.title }} – {{ SITE_NAME }}</title
+>{% endblock %}
+{% block meta_description %}
+    <meta name="description" content="{{ object.excerpt|default:_('Guide zu einem KI-Thema.') }}"/>
 {% endblock %}
+{% block og_type %}article{% endblock %}
+{% block meta_jsonld %}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "{{ object.title|escapejs }}",
+    "datePublished": "{{ object.published_at|date:'c' }}",
+    "dateModified": "{{ object.updated_at|default:object.published_at|date:'c' }}",
+    "author": {% if object.author %}"{{ object.author.get_username|escapejs }}"{% else %}"KI Tools"{% endif %},
+    "mainEntityOfPage": "{{ request.build_absolute_uri }}",
+    "image": {% if object.hero_image %}"{{ request.scheme }}://{{ request.get_host }}{{ object.hero_image.url }}
+        "{% else %}"{{ SITE_URL }}/static/og-default.png"{% endif %}
+        }
+    </script>
+{% endblock %}
+{% block title %}{{ object.title }}{% endblock %} {% block content %}
+    {% include "partials/breadcrumbs.html" %}
+
+    <article class="prose max-w-none">
+        <header class="mb-6">
+            <h1 class="text-3xl font-bold">{{ object.title }}</h1>
+            <div
+                    class="mt-2 flex flex-wrap items-center gap-3 text-sm text-base-content/70"
+            >
+                {% if object.published_at %}
+                    <time
+                            datetime="{{ object.published_at|date:'c' }}"
+                    >📅 {{ object.published_at|date:"d.m.Y" }}</time
+                    >{% endif %} {% if object.reading_time %}<span
+            >⏱ {{ object.reading_time }}&nbsp;min</span
+            >{% endif %}
+            </div>
+        </header>
+
+        {% if object.hero_image %}
+            <figure class="mb-6">
+                <img
+                        src="{{ object.hero_image.url }}"
+                        alt="{{ object.title }}"
+                        class="w-full rounded-2xl"
+                />
+            </figure>
+        {% endif %} {% if object.excerpt %}
+        <p class="text-lg text-base-content/80">{{ object.excerpt }}</p>
+        <div class="divider"></div>
+    {% endif %}
+
+        <div class="content">{{ object.body|safe }}</div>
+    </article>
+
+    {% if related %}
+        <section class="mt-10">
+            <h2 class="text-2xl font-semibold mb-4">{% trans "Verwandte Guides" %}</h2>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {% for it in related %}
+                    <article class="card bg-base-100 shadow">
+                        <div class="card-body">
+                            <h3 class="card-title text-base">
+                                <a
+                                        href="{% url 'guides:detail' slug=it.slug %}"
+                                        class="link link-hover"
+                                >{{ it.title }}</a
+                                >
+                            </h3>
+                            {% if it.published_at %}
+                                <time
+                                        class="text-sm text-base-content/70"
+                                        datetime="{{ it.published_at|date:'c' }}"
+                                >{{ it.published_at|date:"d.m.Y" }}</time
+                                >{% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %} {% endblock %}

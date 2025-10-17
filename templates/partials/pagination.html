@@ -1,0 +1,30 @@
+{% load i18n %} {% if page_obj.paginator.num_pages > 1 %}
+<div class="join my-6 justify-center flex">
+  {% if page_obj.has_previous %}
+  <a
+    href="?page={{ page_obj.previous_page_number }}"
+    class="join-item btn btn-sm"
+    aria-label="{% trans 'Vorherige Seite' %}"
+    >«</a
+  >
+  {% else %}
+  <button class="join-item btn btn-sm btn-disabled">«</button>
+  {% endif %}
+
+  <span class="join-item btn btn-sm btn-ghost pointer-events-none">
+    {% blocktrans %}Seite {{ page_obj.number }} von {{
+    page_obj.paginator.num_pages }}{% endblocktrans %}
+  </span>
+
+  {% if page_obj.has_next %}
+  <a
+    href="?page={{ page_obj.next_page_number }}"
+    class="join-item btn btn-sm"
+    aria-label="{% trans 'Nächste Seite' %}"
+    >»</a
+  >
+  {% else %}
+  <button class="join-item btn btn-sm btn-disabled">»</button>
+  {% endif %}
+</div>
+{% endif %}

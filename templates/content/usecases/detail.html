@@ -1,11 +1,93 @@
-{% extends 'base.html' %}
-{% block title %}{{ item.title }}{% endblock %}
-{% block content %}
-    <h1>{{ item.title }}</h1>
-    <p><strong>Persona:</strong> {{ item.persona }}</p>
-    <p>{{ item.problem }}</p>
-    {% if item.workflow_steps %}
-        <h3>Workflow</h3>
-        <pre>{{ item.workflow_steps|json_script:'wf' }}</pre>
+{% extends "base.html" %} {% load i18n %} {% block title %}{{ object.title }}
+{% endblock %} {% block content %} {% include "partials/breadcrumbs.html" %}
+
+    <article class="prose max-w-none">
+        <header class="mb-6">
+            <h1 class="text-3xl font-bold">{{ object.title }}</h1>
+            <div
+                    class="mt-2 flex flex-wrap items-center gap-3 text-sm text-base-content/70"
+            >
+                <span><strong>{% trans "Persona:" %}</strong> {{ object.persona }}</span>
+                {% if object.published_at %}
+                    <time
+                            datetime="{{ object.published_at|date:'c' }}"
+                    >📅 {{ object.published_at|date:"d.m.Y" }}</time
+                    >{% endif %}
+            </div>
+        </header>
+
+        {% if object.problem %}
+            <section class="mb-6">
+                <h2 class="text-2xl font-semibold">
+                    {% trans "Ausgangssituation / Problem" %}
+                </h2>
+                <p>{{ object.problem }}</p>
+            </section>
+        {% endif %} {% if object.workflow_steps %}
+        <section class="mb-6">
+            <h2 class="text-2xl font-semibold">{% trans "Lösungsweg (Schritte)" %}</h2>
+            <ol class="list-decimal pl-6 space-y-2">
+                {% for step in object.workflow_steps %}
+                    <li>{{ step }}</li>
+                {% endfor %}
+            </ol>
+        </section>
+    {% endif %} {% if object.kpi_impact %}
+        <section class="mb-6">
+            <h2 class="text-2xl font-semibold">{% trans "Wirkung / KPIs" %}</h2>
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <tbody>
+                    {% for key, val in object.kpi_impact.items %}
+                        <tr>
+                            <th class="whitespace-nowrap">{{ key }}</th>
+                            <td>{{ val }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    {% endif %} {% if object.tools.all %}
+        <section class="mb-6">
+            <h2 class="text-2xl font-semibold">{% trans "Eingesetzte Tools" %}</h2>
+            <div class="flex flex-wrap gap-2">
+                {% for t in object.tools.all %}
+                    <a
+                            href="{% url 'catalog:tool_detail' slug=t.slug %}"
+                            class="badge badge-outline"
+                    >{{ t.name }}</a
+                    >
+                {% empty %}
+                    <span class="text-base-content/70"
+                    >{% trans "Keine Tools verknüpft." %}</span
+                    >
+                {% endfor %}
+            </div>
+        </section>
     {% endif %}
-{% endblock %}
+    </article>
+
+    {% if similar %}
+        <section class="mt-10">
+            <h2 class="text-2xl font-semibold mb-4">
+                {% trans "Ähnliche Anwendungsfälle" %}
+            </h2>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {% for it in similar %}
+                    <article class="card bg-base-100 shadow">
+                        <div class="card-body">
+                            <h3 class="card-title text-base">
+                                <a
+                                        href="{% url 'usecases:detail' slug=it.slug %}"
+                                        class="link link-hover"
+                                >{{ it.title }}</a
+                                >
+                            </h3>
+                            <p class="text-sm text-base-content/70">{{ it.persona }}</p>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %} {% endblock %}
