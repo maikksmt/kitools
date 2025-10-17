@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}{{ item.title }}{% endblock %}
+{% block content %}
+    <h1>{{ item.title }}</h1>
+    <p><strong>Persona:</strong> {{ item.persona }}</p>
+    <p>{{ item.problem }}</p>
+    {% if item.workflow_steps %}
+        <h3>Workflow</h3>
+        <pre>{{ item.workflow_steps|json_script:'wf' }}</pre>
+    {% endif %}
+{% endblock %}

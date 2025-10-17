@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Newsletter{% endblock %}
+{% block content %}
+    <h1>Newsletter abonnieren</h1>
+    <form method="post">{% csrf_token %}
+        <label>
+            <input type="email" name="email" placeholder="E‑Mail" required>
+        </label>
+        <button type="submit">Abonnieren</button>
+    </form>
+{% endblock %}

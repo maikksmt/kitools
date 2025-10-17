@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Tools{% endblock %}
+{% block content %}
+    <h1>Alle Tools</h1>
+    <ul>
+        {% for t in tools %}
+            <li><a href="/tools/{{ t.slug }}/">{{ t.name }}</a>{% if t.free_tier %} · Free‑Tier{% endif %}</li>
+        {% empty %}
+            <li>Keine Tools vorhanden.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

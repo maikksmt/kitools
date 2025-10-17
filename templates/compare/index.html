@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Vergleiche{% endblock %}
+{% block content %}
+    <h1>Vergleiche</h1>
+    <ul>
+        {% for c in items %}
+            <li><a href="/vergleiche/{{ c.slug }}/">{{ c.title }}</a></li>
+        {% empty %}
+            <li>Keine Vergleiche.</li>{% endfor %}
+    </ul>
+{% endblock %}

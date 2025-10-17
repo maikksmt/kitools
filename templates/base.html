@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}KI‑Tools & Automatisierung{% endblock %}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/">Home</a> · <a href="/tools/">Tools</a> · <a href="/guides/">Guides</a> ·
+        <a href="/vergleiche/">Vergleiche</a> · <a href="/prompts/">Prompts</a>
+    </nav>
+</header>
+<main>
+    {% block content %}{% endblock %}
+</main>
+<footer>
+    <small>© {{ now|default:"2025" }} – KI‑Tools & Automatisierung</small>
+</footer>
+</body>
+</html>

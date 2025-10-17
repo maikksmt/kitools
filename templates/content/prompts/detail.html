@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}{{ item.title }}{% endblock %}
+{% block content %}
+    <h1>{{ item.title }}</h1>
+    <pre>{{ item.body }}</pre>
+    {% if item.examples %}
+        <h3>Beispiele</h3>
+        <pre>{{ item.examples|json_script:'ex' }}</pre>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}{{ cmp.title }}{% endblock %}
+{% block content %}
+    <h1>{{ cmp.title }}</h1>
+    <p>{{ cmp.intro }}</p>
+    {% if cmp.winner %}<p><strong>Gewinner:</strong> {{ cmp.winner.name }}</p>{% endif %}
+{% endblock %}

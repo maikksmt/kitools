@@ -1,0 +1,32 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Chatbots",
+      "slug": "chatbots"
+    }
+  },
+  {
+    "model": "catalog.tool",
+    "pk": 1,
+    "fields": {
+      "name": "ChatGPT",
+      "slug": "chatgpt",
+      "short_desc": "KI‑Chatbot",
+      "language_support": [
+        "de",
+        "en"
+      ],
+      "free_tier": true
+    }
+  },
+  {
+    "model": "catalog.tool_categories",
+    "pk": 1,
+    "fields": {
+      "tool": 1,
+      "category": 1
+    }
+  }
+]

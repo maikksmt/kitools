@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}{{ tool.name }}{% endblock %}
+{% block content %}
+    <h1>{{ tool.name }}</h1>
+    <p>{{ tool.short_desc }}</p>
+    <p><a href="{{ tool.website_url }}" target="_blank" rel="nofollow noopener">Zur Website</a></p>
+    <h3>Preispläne</h3>
+    <ul>
+        {% for p in tool.pricing.all %}
+            <li>{{ p.name }} – mtl. {{ p.price_month }} / jährl. {{ p.price_year }}</li>
+        {% empty %}
+            <li>Keine Daten</li>{% endfor %}
+    </ul>
+{% endblock %}

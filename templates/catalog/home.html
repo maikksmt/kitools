@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Start · KI‑Tools{% endblock %}
+{% block content %}
+    <h1>Empfohlene Tools</h1>
+    <ul>
+        {% for t in featured %}
+            <li><a href="/tools/{{ t.slug }}/">{{ t.name }}</a></li>{% empty %}
+            <li>Keine.</li>{% endfor %}
+    </ul>
+    <h2>Neu hinzugefügt</h2>
+    <ul>
+        {% for t in latest %}
+            <li><a href="/tools/{{ t.slug }}/">{{ t.name }}</a></li>{% empty %}
+            <li>Keine.</li>{% endfor %}
+    </ul>
+{% endblock %}
