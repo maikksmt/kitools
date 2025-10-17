@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'taggit',
     'imagekit',
     'django_celery_beat',
+    'heroicons',
 
     # Projekt-Apps
     'catalog',
@@ -71,6 +72,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+            ],
+            "builtins": [
+                "heroicons.templatetags.heroicons",
             ],
         },
     },
@@ -132,7 +136,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Celery (einfaches Beispiel)
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379/0')
-CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://localhost:6379/1')
+CELERY_RESULT_BACKEND = os.getenv(
+    'CELERY_RESULT_BACKEND', 'redis://localhost:6379/1')
 
 # DRF Basis
 REST_FRAMEWORK = {

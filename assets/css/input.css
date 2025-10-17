@@ -4,7 +4,6 @@
 @source not "./daisyui{,*}.mjs";
 
 @plugin "./daisyui.mjs" {
-    themes: nord --default, abyss --prefersdark, cupcake, dracula;
-    root: ":root";
+    themes: light --default, dracula --prefersdark;
     logs: true;
 }
