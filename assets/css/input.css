@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@source not "./tailwindcss";
+@source not "./daisyui{,*}.mjs";
+
+@plugin "./daisyui.mjs" {
+    themes: nord --default, abyss --prefersdark, cupcake, dracula;
+    root: ":root";
+    logs: true;
+}
