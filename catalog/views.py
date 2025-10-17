@@ -9,11 +9,15 @@ def home(request):
 
 
 def tool_list(request):
-    qs = Tool.objects.all().select_related()
+    qs = Tool.objects.all().prefetch_related('categories')
+    q = request.GET.get('q')
+    if q:
+        qs = qs.filter(name__icontains=q) | qs.filter(short_desc__icontains=q)
     cat = request.GET.get('cat')
     if cat:
         qs = qs.filter(categories__slug=cat)
-    return render(request, 'catalog/tool_list.html', {'tools': qs})
+    category_list = Category.objects.all().order_by('name')
+    return render(request, 'catalog/tool_list.html', {'tools': qs, 'category_list': category_list})
 
 
 def tool_detail(request, slug):

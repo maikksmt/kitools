@@ -1,14 +1,68 @@
 {% extends 'base.html' %}
 {% block title %}{{ tool.name }}{% endblock %}
 {% block content %}
-    <h1>{{ tool.name }}</h1>
-    <p>{{ tool.short_desc }}</p>
-    <p><a href="{{ tool.website_url }}" target="_blank" rel="nofollow noopener">Zur Website</a></p>
-    <h3>Preispläne</h3>
-    <ul>
-        {% for p in tool.pricing.all %}
-            <li>{{ p.name }} – mtl. {{ p.price_month }} / jährl. {{ p.price_year }}</li>
-        {% empty %}
-            <li>Keine Daten</li>{% endfor %}
-    </ul>
+    <div class="breadcrumbs text-sm mb-4">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/tools/">Tools</a></li>
+            <li>{{ tool.name }}</li>
+        </ul>
+    </div>
+
+    <section class="card bg-base-100 shadow">
+        <div class="card-body">
+            <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h1 class="text-3xl font-bold flex items-center gap-3">
+                        {{ tool.name }}
+                        {% if tool.free_tier %}<span class="badge badge-success">Free-Tier</span>{% endif %}
+                    </h1>
+                    <p class="text-base-content/70 mt-1">{{ tool.short_desc }}</p>
+                    <div class="mt-2 flex gap-2 flex-wrap">
+                        {% for c in tool.categories.all %}
+                            <span class="badge badge-outline">{{ c.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if tool.website_url %}
+                    <a href="{{ tool.website_url }}" target="_blank" rel="nofollow noopener" class="btn btn-primary">
+                        Jetzt testen
+                    </a>
+                {% endif %}
+            </header>
+
+            {% if tool.long_desc %}
+                <article class="prose max-w-none mt-4">
+                    {{ tool.long_desc|linebreaks }}
+                </article>
+            {% endif %}
+
+            <h3 class="text-xl font-semibold mt-6">Preispläne</h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-3">
+                {% for p in tool.pricing.all %}
+                    <div class="card bg-base-200">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ p.name }}</h4>
+                            <p class="text-2xl font-bold">
+                                {% if p.price_month %}€{{ p.price_month }}
+                                    <span class="text-sm font-normal">/Monat</span>{% else %}—{% endif %}
+                            </p>
+                            <ul class="list-disc list-inside text-sm mt-2">
+                                {% for f in p.features %}
+                                    <li>{{ f }}</li>{% endfor %}
+                            </ul>
+                            {% if tool.website_url %}
+                                <div class="card-actions justify-end mt-3">
+                                    <a href="{{ tool.website_url }}" target="_blank" rel="nofollow noopener"
+                                       class="btn btn-secondary btn-sm">Plan wählen</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="alert">Keine Preisdaten vorhanden.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 {% endblock %}

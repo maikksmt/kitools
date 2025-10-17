@@ -1,12 +1,46 @@
 {% extends 'base.html' %}
 {% block title %}Tools{% endblock %}
 {% block content %}
-    <h1>Alle Tools</h1>
-    <ul>
+    <section class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
+        <div>
+            <h1 class="text-2xl font-bold">Alle Tools</h1>
+            <p class="text-base-content/70">Vergleiche KI-Tools nach Kategorien, Preis und Free-Tier.</p>
+        </div>
+        <form method="get" class="flex gap-2">
+            <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Suche…" class="input input-bordered"/>
+            <select name="cat" class="select select-bordered">
+                <option value="">Alle Kategorien</option>
+                {% for c in category_list %}
+                    <option value="{{ c.slug }}"
+                            {% if request.GET.cat == c.slug %}selected{% endif %}>{{ c.name }}</option>
+                {% endfor %}
+            </select>
+            <button class="btn btn-primary" type="submit">Filtern</button>
+        </form>
+    </section>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {% for t in tools %}
-            <li><a href="/tools/{{ t.slug }}/">{{ t.name }}</a>{% if t.free_tier %} · Free‑Tier{% endif %}</li>
+            <div class="card bg-base-100 shadow hover:shadow-lg transition">
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <a href="/tools/{{ t.slug }}/" class="link link-hover">{{ t.name }}</a>
+                        {% if t.free_tier %}
+                            <div class="badge badge-success">Free</div>{% endif %}
+                    </h2>
+                    <p class="line-clamp-2">{{ t.short_desc }}</p>
+                    <div class="flex gap-2 flex-wrap mt-2">
+                        {% for c in t.categories.all %}
+                            <div class="badge badge-outline">{{ c.name }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="card-actions justify-end mt-3">
+                        <a href="/tools/{{ t.slug }}/" class="btn btn-sm btn-secondary">Details</a>
+                    </div>
+                </div>
+            </div>
         {% empty %}
-            <li>Keine Tools vorhanden.</li>
+            <div class="alert">Keine Tools gefunden.</div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

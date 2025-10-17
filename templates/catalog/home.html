@@ -1,16 +1,38 @@
 {% extends 'base.html' %}
-{% block title %}Start · KI‑Tools{% endblock %}
+{% block title %}Start · KI-Tools{% endblock %}
 {% block content %}
-    <h1>Empfohlene Tools</h1>
-    <ul>
+    <section class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold">Empfohlene Tools</h1>
+        <a href="/tools/" class="btn btn-sm btn-primary">Alle Tools</a>
+    </section>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {% for t in featured %}
-            <li><a href="/tools/{{ t.slug }}/">{{ t.name }}</a></li>{% empty %}
-            <li>Keine.</li>{% endfor %}
-    </ul>
-    <h2>Neu hinzugefügt</h2>
-    <ul>
+            <div class="card bg-base-100 shadow hover:shadow-lg transition">
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <a href="/tools/{{ t.slug }}/" class="link link-hover">{{ t.name }}</a>
+                        {% if t.free_tier %}
+                            <div class="badge badge-success">Free-Tier</div>{% endif %}
+                    </h2>
+                    <p class="line-clamp-2">{{ t.short_desc }}</p>
+                    <div class="card-actions justify-between items-center mt-2">
+                        <div class="badge badge-outline">{{ t.vendor|default:"" }}</div>
+                        <a href="/tools/{{ t.slug }}/" class="btn btn-sm btn-secondary">Details</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert">Noch keine Empfehlungen.</div>
+        {% endfor %}
+    </div>
+
+    <h2 class="text-xl font-semibold mt-10 mb-4">Neu hinzugefügt</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {% for t in latest %}
-            <li><a href="/tools/{{ t.slug }}/">{{ t.name }}</a></li>{% empty %}
-            <li>Keine.</li>{% endfor %}
-    </ul>
+            <a href="/tools/{{ t.slug }}/" class="btn btn-outline justify-start">{{ t.name }}</a>
+        {% empty %}
+            <div class="alert">Keine neuen Tools.</div>
+        {% endfor %}
+    </div>
 {% endblock %}

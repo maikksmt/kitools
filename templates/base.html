@@ -1,23 +1,78 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}KI‑Tools & Automatisierung{% endblock %}</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <title>{% block title %}KI-Tools & Automatisierung{% endblock %}</title>
+    <link rel="stylesheet" href="/static/build/app.css">
+    <script>
+        // persistentes Theme (light/dark)
+        (function () {
+            const t = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
 </head>
-<body>
-<header>
-    <nav>
-        <a href="/">Home</a> · <a href="/tools/">Tools</a> · <a href="/guides/">Guides</a> ·
-        <a href="/vergleiche/">Vergleiche</a> · <a href="/prompts/">Prompts</a>
-    </nav>
-</header>
-<main>
+<body class="min-h-screen bg-base-100 text-base-content">
+<!-- Navbar -->
+<div class="navbar bg-base-100 border-b">
+    <div class="container-xl">
+        <div class="flex-1">
+            <a href="/" class="btn btn-ghost text-xl font-bold">KI-Tools</a>
+        </div>
+        <div class="flex-none gap-2">
+            <ul class="menu menu-horizontal px-1 hidden sm:flex">
+                <li><a href="/tools/">Tools</a></li>
+                <li><a href="/guides/">Guides</a></li>
+                <li><a href="/vergleiche/">Vergleiche</a></li>
+                <li><a href="/prompts/">Prompts</a></li>
+            </ul>
+            <!-- Theme Toggle -->
+            <label class="swap swap-rotate btn btn-ghost" title="Theme wechseln">
+                <input id="themeToggle" type="checkbox"/>
+                <svg class="swap-off fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M5.64 17l-.71.71a1 1 0 01-1.41-1.41L4.22 15.6A8 8 0 1112 20a7.93 7.93 0 01-6.36-3z"/>
+                </svg>
+                <svg class="swap-on fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M6.76 4.84l-1.8-1.79 1.41-1.41 1.79 1.8-1.4 1.4zM1 13h3v-2H1v2zm10 10h2v-3h-2v3zm9.66-17.66l-1.41-1.41-1.79 1.8 1.41 1.41 1.79-1.8zM17 13h3v-2h-3v2zM4.84 17.24l-1.8 1.79 1.41 1.41 1.8-1.79-1.41-1.41z"/>
+                </svg>
+            </label>
+        </div>
+    </div>
+</div>
+
+<!-- Page container -->
+<main class="container-xl py-6">
     {% block content %}{% endblock %}
 </main>
-<footer>
-    <small>© {{ now|default:"2025" }} – KI‑Tools & Automatisierung</small>
+
+<!-- Footer -->
+<footer class="border-t py-10 mt-10">
+    <div class="container-xl text-sm text-base-content/70">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <p>© {{ now|default:"2025" }} – KI-Tools & Automatisierung</p>
+            <nav class="flex gap-4">
+                <a href="/newsletter/" class="link link-hover">Newsletter</a>
+                <a href="/ueber-uns/" class="link link-hover">Über uns</a>
+                <a href="/kontakt/" class="link link-hover">Kontakt</a>
+                <a href="/rechtliches/" class="link link-hover">Impressum & Datenschutz</a>
+            </nav>
+        </div>
+    </div>
 </footer>
+
+<script>
+    // Theme Toggle Handler
+    (function () {
+        const el = document.getElementById('themeToggle');
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        el.checked = (current === 'dark');
+        el.addEventListener('change', () => {
+            const next = el.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    })();
+</script>
 </body>
 </html>

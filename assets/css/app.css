@@ -1,0 +1,12 @@
+/* Tailwind v4 Entry */
+@import "tailwindcss";
+
+/* First-party Plugins kannst du per CSS laden ODER in der Config.
+   Wir lassen sie hier aus der CSS raus und laden ALLE Plugins in der Config. */
+
+/* Eigene Komponenten */
+@layer components {
+    .container-xl {
+        @apply max-w-7xl mx-auto px-4;
+    }
+}
