@@ -1,7 +1,7 @@
 # compare/views.py
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.utils.translation import gettext as _
 from django.urls import reverse
 
@@ -46,26 +46,67 @@ def detail(request, slug):
     """
     Detailansicht eines Vergleichs (inkl. Bewertungstabelle).
     """
-    obj = get_object_or_404(
-        Comparison.objects.prefetch_related("tools", "categories"), slug=slug
+    qs = (
+        Comparison.objects
+        .prefetch_related("tools", "tools__categories")
+        # .select_related(...)  # nur falls du FKs auf winner o.ä. hast, sonst weglassen
     )
+    obj = get_object_or_404(qs, slug=slug)
 
-    # ähnliche Vergleiche nach Kategorie
-    related_comparisons = (
-        Comparison.objects.filter(categories__in=obj.categories.all())
+    # Kategorien aus den verknüpften Tools ableiten (unique, stabil)
+    category_set = {}
+    for tool in obj.tools.all():
+        for cat in getattr(tool, "categories").all():
+            category_set[cat.pk] = cat
+    categories = list(category_set.values())
+
+    # ---- score_breakdown für das Template vorbereiten ----
+    # Erwartete Template-Struktur:
+    #   tools_list: [Tool, Tool, ...] (Reihenfolge der Spalten)
+    #   score_rows: [(criterion, [score_for_tool1, score_for_tool2, ...]), ...]
+    tools_list = list(obj.tools.all())
+    raw = obj.score_breakdown or {}
+    score_rows = []
+
+    for criterion, value in raw.items():
+        per_tool = []
+        if isinstance(value, dict):
+            # Versuche verschiedene Keys (slug, name, pk, index) der Tools
+            for idx, t in enumerate(tools_list):
+                v = (
+                        value.get(getattr(t, "slug", None))
+                        or value.get(getattr(t, "name", None))
+                        or value.get(str(getattr(t, "pk", "")))
+                        or value.get(idx)  # falls numerisch indexiert
+                        or value.get(str(idx))
+                )
+                per_tool.append(v if v not in (None, "") else "–")
+        else:
+            # z.B. "9 : 8" → splitten und nach Reihenfolge der Tools mappen
+            parts = [s.strip() for s in str(value).split(":")]
+            for idx, _t in enumerate(tools_list):
+                per_tool.append(parts[idx] if idx < len(parts) else "–")
+
+        score_rows.append((criterion, per_tool))
+
+    # ähnliche Vergleiche: teilen sich mindestens ein Tool
+    related = (
+        Comparison.objects
+        .prefetch_related("tools")
         .exclude(pk=obj.pk)
-        .distinct()
-        .order_by("-id")[:6]
+        .filter(tools__in=obj.tools.all())
+        .annotate(shared_tools=Count("tools"))
+        .order_by("-shared_tools", "title")
+        .distinct()[:6]
     )
 
     context = {
         "object": obj,
-        "related_comparisons": related_comparisons,
+        "categories": categories,  # ⟵ abgeleitete Kategorien
+        "tools_list": tools_list,  # ⟵ für Tabellenkopf
+        "score_rows": score_rows,  # ⟵ für Tabellenkörper
+        "related": related,
         "title": obj.title,
-        "crumbs": [
-            (_("Vergleiche"),
-             reverse("compare:index") if "compare:index" in request.resolver_match.namespaces else "/vergleiche/"),
-            (obj.title, request.path),
-        ],
+        "crumbs": [(_("Vergleiche"), "/vergleiche/"), (obj.title, request.path)],
     }
     return render(request, "compare/detail.html", context)

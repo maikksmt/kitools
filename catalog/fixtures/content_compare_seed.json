@@ -1,0 +1,607 @@
+[
+  {
+    "model": "taggit.tag",
+    "pk": 1001,
+    "fields": {
+      "name": "SEO",
+      "slug": "seo"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 1002,
+    "fields": {
+      "name": "Texterstellung",
+      "slug": "texterstellung"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 1003,
+    "fields": {
+      "name": "Social Media",
+      "slug": "social-media"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 1004,
+    "fields": {
+      "name": "Marketing",
+      "slug": "marketing"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 1005,
+    "fields": {
+      "name": "Bild",
+      "slug": "bild"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 1006,
+    "fields": {
+      "name": "Midjourney",
+      "slug": "midjourney"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 1007,
+    "fields": {
+      "name": "Produktivität",
+      "slug": "produktivitaet"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 1008,
+    "fields": {
+      "name": "Planung",
+      "slug": "planung"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 1009,
+    "fields": {
+      "name": "Audio",
+      "slug": "audio"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 1010,
+    "fields": {
+      "name": "Podcast",
+      "slug": "podcast"
+    }
+  },
+  {
+    "model": "content.guide",
+    "pk": 101,
+    "fields": {
+      "title": "Effektiv schreiben mit ChatGPT",
+      "slug": "effektiv-schreiben-chatgpt",
+      "excerpt": "So nutzt du ChatGPT, um bessere Texte schneller zu erstellen.",
+      "body": "<p>Dieser Guide zeigt Schritt für Schritt, wie du ChatGPT produktiv für Schreibaufgaben einsetzt.</p>",
+      "reading_time": 7,
+      "status": "published",
+      "published_at": "2025-10-10T10:00:00Z",
+      "related_tools": [
+        1,
+        2
+      ],
+      "categories": [
+        2
+      ]
+    }
+  },
+  {
+    "model": "content.guide",
+    "pk": 102,
+    "fields": {
+      "title": "Automatisierung mit Make und ChatGPT",
+      "slug": "automatisierung-make-chatgpt",
+      "excerpt": "Workflows mit Make (Integromat) und KI automatisieren.",
+      "body": "<p>In diesem Guide lernst du, wie du Make mit ChatGPT verknüpfst, um Texte automatisch zu generieren.</p>",
+      "reading_time": 9,
+      "status": "published",
+      "published_at": "2025-10-11T09:00:00Z",
+      "related_tools": [
+        1,
+        7
+      ],
+      "categories": [
+        5
+      ]
+    }
+  },
+  {
+    "model": "content.guide",
+    "pk": 103,
+    "fields": {
+      "title": "Bildideen mit DALL·E und Midjourney",
+      "slug": "bildideen-dalle-midjourney",
+      "excerpt": "Zwei starke Bildgeneratoren im Vergleich.",
+      "body": "<p>Midjourney bietet kreative Kontrolle, DALL·E ist einfacher – hier erfährst du, welches Tool wann sinnvoll ist.</p>",
+      "reading_time": 6,
+      "status": "published",
+      "published_at": "2025-10-12T08:00:00Z",
+      "related_tools": [
+        3,
+        4
+      ],
+      "categories": [
+        3
+      ]
+    }
+  },
+  {
+    "model": "content.guide",
+    "pk": 104,
+    "fields": {
+      "title": "Sprache lernen mit ELSA Speak und ChatGPT",
+      "slug": "sprache-lernen-elsa-chatgpt",
+      "excerpt": "So kombinierst du ChatGPT mit ELSA Speak für dein Sprachtraining.",
+      "body": "<p>ChatGPT liefert Dialoge, ELSA prüft Aussprache – gemeinsam unschlagbar für Sprachenlernen.</p>",
+      "reading_time": 8,
+      "status": "published",
+      "published_at": "2025-10-13T11:00:00Z",
+      "related_tools": [
+        1,
+        10
+      ],
+      "categories": [
+        6
+      ]
+    }
+  },
+  {
+    "model": "content.guide",
+    "pk": 105,
+    "fields": {
+      "title": "KI-Videos mit Synthesia erstellen",
+      "slug": "ki-videos-synthesia",
+      "excerpt": "Lerne, wie du in 5 Minuten professionelle KI-Videos erstellst.",
+      "body": "<p>Synthesia erstellt Sprecher-Videos aus Text – perfekt für Tutorials und Präsentationen.</p>",
+      "reading_time": 5,
+      "status": "published",
+      "published_at": "2025-10-14T12:00:00Z",
+      "related_tools": [
+        5
+      ],
+      "categories": [
+        4
+      ]
+    }
+  },
+  {
+    "model": "content.prompt",
+    "pk": 201,
+    "fields": {
+      "title": "SEO-Text-Prompt",
+      "slug": "seo-text-prompt",
+      "body": "Schreibe einen suchmaschinenoptimierten Text über {{Thema}} mit Fokus auf {{Keyword}}.",
+      "use_case": "SEO-Texterstellung",
+      "examples": [
+        "Schreibe einen Text über KI-Tools für Marketing"
+      ],
+      "status": "published",
+      "published_at": "2025-10-10T13:00:00Z",
+      "tools": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "content.prompt",
+    "pk": 202,
+    "fields": {
+      "title": "Social-Media-Post-Prompt",
+      "slug": "social-media-post-prompt",
+      "body": "Erstelle einen kurzen Social-Media-Post zu {{Thema}} mit humorvollem Ton.",
+      "use_case": "Social Media",
+      "examples": [
+        "Post über KI-Trends 2025"
+      ],
+      "status": "published",
+      "published_at": "2025-10-11T13:00:00Z",
+      "tools": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "model": "content.prompt",
+    "pk": 203,
+    "fields": {
+      "title": "Prompt für Midjourney",
+      "slug": "prompt-midjourney",
+      "body": "Erstelle ein hyperrealistisches Porträt einer futuristischen Stadt bei Nacht.",
+      "use_case": "Bildgenerierung",
+      "examples": [
+        "Hyperrealistic futuristic skyline at night, neon reflections"
+      ],
+      "status": "published",
+      "published_at": "2025-10-12T13:00:00Z",
+      "tools": [
+        3
+      ]
+    }
+  },
+  {
+    "model": "content.prompt",
+    "pk": 204,
+    "fields": {
+      "title": "Produktivität-Prompt für Notion AI",
+      "slug": "produktivitaet-prompt-notion-ai",
+      "body": "Erstelle eine To-Do-Liste für {{Projekt}} mit Deadlines und Prioritäten.",
+      "use_case": "Projektmanagement",
+      "examples": [
+        "To-Do-Liste für Launch-Kampagne"
+      ],
+      "status": "published",
+      "published_at": "2025-10-13T13:00:00Z",
+      "tools": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "content.prompt",
+    "pk": 205,
+    "fields": {
+      "title": "Podcast-Intro-Prompt für ElevenLabs",
+      "slug": "podcast-intro-elevenlabs",
+      "body": "Schreibe und vertone ein 15-Sekunden-Intro für einen Technologie-Podcast.",
+      "use_case": "Audio-Branding",
+      "examples": [
+        "Erstelle Podcast-Intro mit Stimme 'Male-Narrator-3'"
+      ],
+      "status": "published",
+      "published_at": "2025-10-14T13:00:00Z",
+      "tools": [
+        6
+      ]
+    }
+  },
+  {
+    "model": "taggit.taggeditem",
+    "pk": 5001,
+    "fields": {
+      "tag": 1001,
+      "content_type": [
+        "content",
+        "prompt"
+      ],
+      "object_id": 201
+    }
+  },
+  {
+    "model": "taggit.taggeditem",
+    "pk": 5002,
+    "fields": {
+      "tag": 1002,
+      "content_type": [
+        "content",
+        "prompt"
+      ],
+      "object_id": 201
+    }
+  },
+  {
+    "model": "taggit.taggeditem",
+    "pk": 5003,
+    "fields": {
+      "tag": 1003,
+      "content_type": [
+        "content",
+        "prompt"
+      ],
+      "object_id": 202
+    }
+  },
+  {
+    "model": "taggit.taggeditem",
+    "pk": 5004,
+    "fields": {
+      "tag": 1004,
+      "content_type": [
+        "content",
+        "prompt"
+      ],
+      "object_id": 202
+    }
+  },
+  {
+    "model": "taggit.taggeditem",
+    "pk": 5005,
+    "fields": {
+      "tag": 1005,
+      "content_type": [
+        "content",
+        "prompt"
+      ],
+      "object_id": 203
+    }
+  },
+  {
+    "model": "taggit.taggeditem",
+    "pk": 5006,
+    "fields": {
+      "tag": 1006,
+      "content_type": [
+        "content",
+        "prompt"
+      ],
+      "object_id": 203
+    }
+  },
+  {
+    "model": "taggit.taggeditem",
+    "pk": 5007,
+    "fields": {
+      "tag": 1007,
+      "content_type": [
+        "content",
+        "prompt"
+      ],
+      "object_id": 204
+    }
+  },
+  {
+    "model": "taggit.taggeditem",
+    "pk": 5008,
+    "fields": {
+      "tag": 1008,
+      "content_type": [
+        "content",
+        "prompt"
+      ],
+      "object_id": 204
+    }
+  },
+  {
+    "model": "taggit.taggeditem",
+    "pk": 5009,
+    "fields": {
+      "tag": 1009,
+      "content_type": [
+        "content",
+        "prompt"
+      ],
+      "object_id": 205
+    }
+  },
+  {
+    "model": "taggit.taggeditem",
+    "pk": 5010,
+    "fields": {
+      "tag": 1010,
+      "content_type": [
+        "content",
+        "prompt"
+      ],
+      "object_id": 205
+    }
+  },
+  {
+    "model": "content.usecase",
+    "pk": 301,
+    "fields": {
+      "title": "Marketing-Kampagne mit ChatGPT und Make",
+      "slug": "marketing-kampagne-chatgpt-make",
+      "persona": "Marketing Manager",
+      "problem": "Kampagnenplanung ist zeitaufwändig und manuell.",
+      "workflow_steps": [
+        "Briefing-Vorlage mit ChatGPT",
+        "Automatische Planung in Make"
+      ],
+      "tools": [
+        1,
+        7
+      ],
+      "kpi_impact": {
+        "Zeitersparnis": "40 %",
+        "Output": "+30 % Inhalte"
+      },
+      "status": "published",
+      "published_at": "2025-10-10T15:00:00Z"
+    }
+  },
+  {
+    "model": "content.usecase",
+    "pk": 302,
+    "fields": {
+      "title": "KI-gestützte Kundenbetreuung",
+      "slug": "ki-kundenbetreuung",
+      "persona": "Support Lead",
+      "problem": "Kundenanfragen stapeln sich; keine 24/7-Verfügbarkeit.",
+      "workflow_steps": [
+        "ChatGPT-FAQ Bot",
+        "Automatisierte Eskalationen via n8n"
+      ],
+      "tools": [
+        1,
+        8
+      ],
+      "kpi_impact": {
+        "Antwortzeit": "-60 %",
+        "Zufriedenheit": "+25 %"
+      },
+      "status": "published",
+      "published_at": "2025-10-11T15:00:00Z"
+    }
+  },
+  {
+    "model": "content.usecase",
+    "pk": 303,
+    "fields": {
+      "title": "E-Learning-Videos mit Synthesia",
+      "slug": "elearning-videos-synthesia",
+      "persona": "Trainer",
+      "problem": "Schulungsvideos müssen schnell und günstig erstellt werden.",
+      "workflow_steps": [
+        "Skript mit ChatGPT",
+        "Videoerstellung in Synthesia"
+      ],
+      "tools": [
+        1,
+        5
+      ],
+      "kpi_impact": {
+        "Kosten": "-70 %",
+        "Erstellungszeit": "-80 %"
+      },
+      "status": "published",
+      "published_at": "2025-10-12T15:00:00Z"
+    }
+  },
+  {
+    "model": "content.usecase",
+    "pk": 304,
+    "fields": {
+      "title": "Design-Ideen mit Midjourney",
+      "slug": "design-ideen-midjourney",
+      "persona": "Grafikdesigner",
+      "problem": "Schnelles Visualisieren von Moodboards.",
+      "workflow_steps": [
+        "Prompt mit ChatGPT",
+        "Generierung in Midjourney"
+      ],
+      "tools": [
+        1,
+        3
+      ],
+      "kpi_impact": {
+        "Ideenfindung": "x2",
+        "Designzeit": "-50 %"
+      },
+      "status": "published",
+      "published_at": "2025-10-13T15:00:00Z"
+    }
+  },
+  {
+    "model": "content.usecase",
+    "pk": 305,
+    "fields": {
+      "title": "Lernhilfe mit ELSA und ChatGPT",
+      "slug": "lernhilfe-elsa-chatgpt",
+      "persona": "Schüler",
+      "problem": "Englisch-Aussprache verbessern und mit ChatGPT üben.",
+      "workflow_steps": [
+        "Aussprache-Übung in ELSA",
+        "Gesprächssimulation mit ChatGPT"
+      ],
+      "tools": [
+        10,
+        1
+      ],
+      "kpi_impact": {
+        "Aussprache-Score": "+20 %",
+        "Motivation": "+35 %"
+      },
+      "status": "published",
+      "published_at": "2025-10-14T15:00:00Z"
+    }
+  },
+  {
+    "model": "compare.comparison",
+    "pk": 401,
+    "fields": {
+      "title": "ChatGPT vs Claude AI",
+      "slug": "chatgpt-vs-claude",
+      "intro": "Zwei führende KI-Chatbots im Vergleich.",
+      "winner": 1,
+      "tools": [
+        1,
+        2
+      ],
+      "score_breakdown": {
+        "Textqualität": "9 : 8",
+        "Kontextverständnis": "10 : 9",
+        "Geschwindigkeit": "8 : 9"
+      }
+    }
+  },
+  {
+    "model": "compare.comparison",
+    "pk": 402,
+    "fields": {
+      "title": "DALL-E 3 vs Midjourney",
+      "slug": "dalle3-vs-midjourney",
+      "intro": "Zwei Bildgeneratoren mit unterschiedlichen Stärken.",
+      "winner": 3,
+      "tools": [
+        3,
+        4
+      ],
+      "score_breakdown": {
+        "Realismus": "8 : 10",
+        "Geschwindigkeit": "9 : 8",
+        "Bedienung": "10 : 7"
+      }
+    }
+  },
+  {
+    "model": "compare.comparison",
+    "pk": 403,
+    "fields": {
+      "title": "Make vs n8n",
+      "slug": "make-vs-n8n",
+      "intro": "Automatisierungstools im Vergleich – Cloud gegen Open Source.",
+      "winner": 7,
+      "tools": [
+        7,
+        8
+      ],
+      "score_breakdown": {
+        "Einfachheit": "9 : 7",
+        "Erweiterbarkeit": "8 : 10",
+        "Kosten": "8 : 9"
+      }
+    }
+  },
+  {
+    "model": "compare.comparison",
+    "pk": 404,
+    "fields": {
+      "title": "Notion AI vs ChatGPT",
+      "slug": "notion-ai-vs-chatgpt",
+      "intro": "Produktivität im Alltag – welcher Assistent hilft mehr?",
+      "winner": 9,
+      "tools": [
+        9,
+        1
+      ],
+      "score_breakdown": {
+        "Integration": "10 : 8",
+        "Flexibilität": "7 : 10",
+        "Preis": "9 : 9"
+      }
+    }
+  },
+  {
+    "model": "compare.comparison",
+    "pk": 405,
+    "fields": {
+      "title": "Synthesia vs ElevenLabs",
+      "slug": "synthesia-vs-elevenlabs",
+      "intro": "Video oder Stimme – welche KI überzeugt im Medien-Einsatz?",
+      "winner": 5,
+      "tools": [
+        5,
+        6
+      ],
+      "score_breakdown": {
+        "Audioqualität": "8 : 10",
+        "Videoqualität": "10 : 0",
+        "Bedienkomfort": "9 : 8"
+      }
+    }
+  }
+]

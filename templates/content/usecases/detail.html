@@ -70,24 +70,12 @@
 
     {% if similar %}
         <section class="mt-10">
-            <h2 class="text-2xl font-semibold mb-4">
-                {% trans "Ähnliche Anwendungsfälle" %}
-            </h2>
+            <h2 class="text-2xl font-semibold mb-4">{% trans "Ähnliche Anwendungsfälle" %}</h2>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {% for it in similar %}
-                    <article class="card bg-base-100 shadow">
-                        <div class="card-body">
-                            <h3 class="card-title text-base">
-                                <a
-                                        href="{% url 'usecases:detail' slug=it.slug %}"
-                                        class="link link-hover"
-                                >{{ it.title }}</a
-                                >
-                            </h3>
-                            <p class="text-sm text-base-content/70">{{ it.persona }}</p>
-                        </div>
-                    </article>
+                {% for item in similar %}
+                    {% include "content/partials/_teaser_card.html" with item=item %}
                 {% endfor %}
             </div>
         </section>
-    {% endif %} {% endblock %}
+    {% endif %}
+{% endblock %}

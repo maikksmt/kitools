@@ -2,39 +2,66 @@
   {
     "model": "catalog.category",
     "pk": 1,
-    "fields": {"name": "Chatbots", "slug": "chatbots", "description": "KI-gestützte Chat-Assistenten"}
+    "fields": {
+      "name": "Chatbots",
+      "slug": "chatbots",
+      "description": "KI-gestützte Chat-Assistenten"
+    }
   },
   {
     "model": "catalog.category",
     "pk": 2,
-    "fields": {"name": "Textgeneratoren", "slug": "textgeneratoren", "description": "Texte automatisch erstellen"}
+    "fields": {
+      "name": "Textgeneratoren",
+      "slug": "textgeneratoren",
+      "description": "Texte automatisch erstellen"
+    }
   },
   {
     "model": "catalog.category",
     "pk": 3,
-    "fields": {"name": "Bild- und Design-Tools", "slug": "bild-tools", "description": "Bilder und Grafiken mit KI generieren"}
+    "fields": {
+      "name": "Bild- und Design-Tools",
+      "slug": "bild-tools",
+      "description": "Bilder und Grafiken mit KI generieren"
+    }
   },
   {
     "model": "catalog.category",
     "pk": 4,
-    "fields": {"name": "Video & Audio", "slug": "video-audio", "description": "Videoschnitt, Stimme, Musik"}
+    "fields": {
+      "name": "Video & Audio",
+      "slug": "video-audio",
+      "description": "Videoschnitt, Stimme, Musik"
+    }
   },
   {
     "model": "catalog.category",
     "pk": 5,
-    "fields": {"name": "Automatisierung", "slug": "automatisierung", "description": "Workflows & Produktivität"}
+    "fields": {
+      "name": "Automatisierung",
+      "slug": "automatisierung",
+      "description": "Workflows & Produktivität"
+    }
   },
   {
     "model": "catalog.category",
     "pk": 6,
-    "fields": {"name": "Lernen & Bildung", "slug": "lernen", "description": "Lern- und Sprach-Apps mit KI"}
+    "fields": {
+      "name": "Lernen & Bildung",
+      "slug": "lernen",
+      "description": "Lern- und Sprach-Apps mit KI"
+    }
   },
   {
     "model": "catalog.category",
     "pk": 7,
-    "fields": {"name": "Office & Tools", "slug": "office", "description": "KI im Büroalltag"}
+    "fields": {
+      "name": "Office & Tools",
+      "slug": "office",
+      "description": "KI im Büroalltag"
+    }
   },
-
   {
     "model": "catalog.tool",
     "pk": 1,
@@ -45,14 +72,20 @@
       "short_desc": "Sprachbasierter KI-Assistent",
       "long_desc": "ChatGPT ist ein KI-Chatbot für Texteingaben, Erklärungen und kreative Aufgaben.",
       "website_url": "https://chat.openai.com/",
-      "language_support": ["de","en"],
+      "language_support": [
+        "de",
+        "en"
+      ],
       "pricing_model": "freemium",
       "free_tier": true,
       "monthly_price_min": 0,
       "rating": 4.9,
       "is_featured": true,
       "published_at": "2025-10-16T18:00:00Z",
-      "categories": [1,2]
+      "categories": [
+        1,
+        2
+      ]
     }
   },
   {
@@ -65,14 +98,20 @@
       "short_desc": "Chat- und Schreib-Assistent",
       "long_desc": "Claude 3 bietet lange Kontexte und genaue Antworten, besonders beliebt bei Textarbeiten.",
       "website_url": "https://claude.ai/",
-      "language_support": ["en","de"],
+      "language_support": [
+        "en",
+        "de"
+      ],
       "pricing_model": "freemium",
       "free_tier": true,
       "monthly_price_min": 0,
       "rating": 4.7,
       "is_featured": false,
       "published_at": "2025-10-16T18:05:00Z",
-      "categories": [1,2]
+      "categories": [
+        1,
+        2
+      ]
     }
   },
   {
@@ -85,14 +124,18 @@
       "short_desc": "KI-Bilder aus Text-Prompts",
       "long_desc": "Midjourney erstellt realistische oder künstlerische Bilder aus Beschreibungen im Discord-Interface.",
       "website_url": "https://midjourney.com/",
-      "language_support": ["en"],
+      "language_support": [
+        "en"
+      ],
       "pricing_model": "subscription",
       "free_tier": false,
       "monthly_price_min": 12,
       "rating": 4.8,
       "is_featured": true,
       "published_at": "2025-10-16T18:10:00Z",
-      "categories": [3]
+      "categories": [
+        3
+      ]
     }
   },
   {
@@ -105,14 +148,19 @@
       "short_desc": "Bildgenerator mit natürlicher Sprache",
       "long_desc": "In ChatGPT integriert – generiert hochwertige Bilder direkt aus Text-Prompts.",
       "website_url": "https://openai.com/dall-e-3",
-      "language_support": ["de","en"],
+      "language_support": [
+        "de",
+        "en"
+      ],
       "pricing_model": "token-based",
       "free_tier": false,
       "monthly_price_min": 5,
       "rating": 4.6,
       "is_featured": false,
       "published_at": "2025-10-16T18:15:00Z",
-      "categories": [3]
+      "categories": [
+        3
+      ]
     }
   },
   {
@@ -125,14 +173,19 @@
       "short_desc": "KI-Videoerstellung mit Avataren",
       "long_desc": "Erstellt professionelle Sprecher-Videos aus Texten – ideal für Schulung und Marketing.",
       "website_url": "https://www.synthesia.io/",
-      "language_support": ["de","en"],
+      "language_support": [
+        "de",
+        "en"
+      ],
       "pricing_model": "subscription",
       "free_tier": false,
       "monthly_price_min": 30,
       "rating": 4.5,
       "is_featured": true,
       "published_at": "2025-10-16T18:20:00Z",
-      "categories": [4]
+      "categories": [
+        4
+      ]
     }
   },
   {
@@ -145,14 +198,19 @@
       "short_desc": "Realistische KI-Stimmen",
       "long_desc": "Wandelt Texte in hochwertige synthetische Sprachausgabe mit natürlichem Klang um.",
       "website_url": "https://elevenlabs.io/",
-      "language_support": ["de","en"],
+      "language_support": [
+        "de",
+        "en"
+      ],
       "pricing_model": "freemium",
       "free_tier": true,
       "monthly_price_min": 0,
       "rating": 4.7,
       "is_featured": false,
       "published_at": "2025-10-16T18:25:00Z",
-      "categories": [4]
+      "categories": [
+        4
+      ]
     }
   },
   {
@@ -165,14 +223,20 @@
       "short_desc": "Workflow-Automatisierung mit visuellen Szenarien",
       "long_desc": "Verbindet Apps und automatisiert Workflows mit Logik, KI und Datenoperationen.",
       "website_url": "https://www.make.com/",
-      "language_support": ["de","en"],
+      "language_support": [
+        "de",
+        "en"
+      ],
       "pricing_model": "freemium",
       "free_tier": true,
       "monthly_price_min": 0,
       "rating": 4.5,
       "is_featured": true,
       "published_at": "2025-10-16T18:30:00Z",
-      "categories": [5,7]
+      "categories": [
+        5,
+        7
+      ]
     }
   },
   {
@@ -185,14 +249,20 @@
       "short_desc": "Selbsthostbare Automatisierung mit KI-Plugins",
       "long_desc": "Open-Source-Alternative zu Zapier, kombinierbar mit KI-Modulen.",
       "website_url": "https://n8n.io/",
-      "language_support": ["de","en"],
+      "language_support": [
+        "de",
+        "en"
+      ],
       "pricing_model": "freemium",
       "free_tier": true,
       "monthly_price_min": 0,
       "rating": 4.4,
       "is_featured": false,
       "published_at": "2025-10-16T18:35:00Z",
-      "categories": [5,7]
+      "categories": [
+        5,
+        7
+      ]
     }
   },
   {
@@ -205,14 +275,19 @@
       "short_desc": "Text- und Aufgaben-Assistent im Büroalltag",
       "long_desc": "In Notion integrierte KI-Funktionen helfen beim Schreiben, Zusammenfassen und Planen.",
       "website_url": "https://www.notion.so/",
-      "language_support": ["de","en"],
+      "language_support": [
+        "de",
+        "en"
+      ],
       "pricing_model": "add-on",
       "free_tier": false,
       "monthly_price_min": 8,
       "rating": 4.6,
       "is_featured": false,
       "published_at": "2025-10-16T18:40:00Z",
-      "categories": [7]
+      "categories": [
+        7
+      ]
     }
   },
   {
@@ -225,26 +300,46 @@
       "short_desc": "Sprachlern-App mit KI-Aussprachebewertung",
       "long_desc": "Hilft beim Englischlernen durch Echtzeit-Feedback zu Aussprache und Betonung.",
       "website_url": "https://elsaspeak.com/",
-      "language_support": ["de","en"],
+      "language_support": [
+        "de",
+        "en"
+      ],
       "pricing_model": "freemium",
       "free_tier": true,
       "monthly_price_min": 0,
       "rating": 4.5,
       "is_featured": false,
       "published_at": "2025-10-16T18:45:00Z",
-      "categories": [6]
+      "categories": [
+        6
+      ]
     }
   },
-
   {
     "model": "catalog.pricingtier",
     "pk": 1,
-    "fields": {"tool": 1, "name": "Free", "price_month": 0, "price_year": 0, "features": ["Basisversion"]}
+    "fields": {
+      "tool": 1,
+      "name": "Free",
+      "price_month": 0,
+      "price_year": 0,
+      "features": [
+        "Basisversion"
+      ]
+    }
   },
   {
     "model": "catalog.pricingtier",
     "pk": 2,
-    "fields": {"tool": 1, "name": "Plus", "price_month": 20, "price_year": 240, "features": ["GPT-4 Zugriff"]}
+    "fields": {
+      "tool": 1,
+      "name": "Plus",
+      "price_month": 20,
+      "price_year": 240,
+      "features": [
+        "GPT-4 Zugriff"
+      ]
+    }
   },
   {
     "model": "catalog.affiliateprogram",

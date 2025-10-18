@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
-{% load heroicons %} {# falls du adamchainz/django-heroicons nutzt #}
 
 {% block title %}{{ seo.title }}{% endblock %}
 {% block meta_extra %}
@@ -66,5 +65,16 @@
             {% endfor %}
         </div>
     </section>
+    {% if recommended_items %}
+        <section class="container mx-auto px-4 mt-10">
+            <h2 class="text-xl font-semibold mb-4">{% trans "Empfohlen für dich" %}</h2>
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {% for item in recommended_items %}
+                    {% include "content/partials/_teaser_card.html" with item=item %}
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
 
 {% endblock %}

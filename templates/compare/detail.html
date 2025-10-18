@@ -54,24 +54,22 @@
                 </h2>
                 <div class="overflow-x-auto">
                     <table class="table">
+                        {# Kopfzeile mit Tools #}
                         <thead>
                         <tr>
-                            <th>{% trans "Kriterium" %}</th>
-                            {% for t in object.tools.all %}
-                                <th>{{ t.name }}</th>
+                            <th class="whitespace-nowrap">{% trans "Kriterium" %}</th>
+                            {% for t in tools_list %}
+                                <th class="whitespace-nowrap">{{ t.name }}</th>
                             {% endfor %}
                         </tr>
                         </thead>
+
                         <tbody>
-                        {# score_breakdown erwartet Struktur: { "Preis": {"ToolA": 8, "ToolB": 7}, "Qualität": {...} } #}
-                        {% for criterion, scores in object.score_breakdown.items %}
+                        {% for criterion, scores in score_rows %}
                             <tr>
                                 <th class="whitespace-nowrap">{{ criterion }}</th>
-                                {% for t in object.tools.all %}
-                                    <td>
-                                        {% if scores.t|get:t.name %} {{ scores|get:t.name }} {% else %}
-                                            {{ scores.t|get:t.slug|default:"–" }} {% endif %}
-                                    </td>
+                                {% for score in scores %}
+                                    <td>{{ score }}</td>
                                 {% endfor %}
                             </tr>
                         {% endfor %}
@@ -87,11 +85,11 @@
     {% endif %}
     </article>
 
-    {% if related_comparisons %}
+    {% if related %}
         <section class="mt-10">
             <h2 class="text-2xl font-semibold mb-4">{% trans "Ähnliche Vergleiche" %}</h2>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {% for c in related_comparisons %}
+                {% for c in related %}
                     <article class="card bg-base-100 shadow">
                         <div class="card-body">
                             <h3 class="card-title text-base">

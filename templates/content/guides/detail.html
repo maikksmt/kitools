@@ -59,25 +59,10 @@
         <section class="mt-10">
             <h2 class="text-2xl font-semibold mb-4">{% trans "Verwandte Guides" %}</h2>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {% for it in related %}
-                    <article class="card bg-base-100 shadow">
-                        <div class="card-body">
-                            <h3 class="card-title text-base">
-                                <a
-                                        href="{% url 'guides:detail' slug=it.slug %}"
-                                        class="link link-hover"
-                                >{{ it.title }}</a
-                                >
-                            </h3>
-                            {% if it.published_at %}
-                                <time
-                                        class="text-sm text-base-content/70"
-                                        datetime="{{ it.published_at|date:'c' }}"
-                                >{{ it.published_at|date:"d.m.Y" }}</time
-                                >{% endif %}
-                        </div>
-                    </article>
+                {% for item in related %}
+                    {% include "content/partials/_teaser_card.html" with item=item %}
                 {% endfor %}
             </div>
         </section>
-    {% endif %} {% endblock %}
+    {% endif %}
+{% endblock %}

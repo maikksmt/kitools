@@ -31,7 +31,15 @@ class GuideAdmin(PublishableAdmin):
 
 @admin.register(Prompt)
 class PromptAdmin(PublishableAdmin):
-    filter_horizontal = ("tools",)
+    list_display = ("title", "published_at", "status", "tag_list")
+    list_filter = ("status",)
+    search_fields = ("title", "slug", "excerpt", "body")
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related("tags")
+
+    def tag_list(self, obj):
+        return ", ".join(obj.tags.names())
 
 
 @admin.register(UseCase)

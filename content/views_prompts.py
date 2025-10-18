@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.utils.translation import gettext as _
 
 from .models import Prompt
+from .services import related_prompts, to_teaser_item
 
 
 def prompt_list(request):
@@ -43,12 +44,9 @@ def prompt_detail(request, slug):
     """
     obj = get_object_or_404(Prompt.published, slug=slug)
 
-    # (Optional) weitere Prompts zum Weiterlesen
-    more = (
-        Prompt.published.exclude(pk=obj.pk)
-        .prefetch_related("tags")
-        .order_by("-published_at")[:8]
-    )
+    # weitere Prompts zum Weiterlesen
+    more_qs = related_prompts(obj, limit=6)
+    more = [to_teaser_item(p, "prompt") for p in more_qs]
 
     ctx = {
         "object": obj,

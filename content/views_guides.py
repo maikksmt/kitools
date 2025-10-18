@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.utils.translation import gettext as _
 
 from .models import Guide
+from .services import related_guides, to_teaser_item
 
 
 def guide_list(request):
@@ -37,12 +38,9 @@ def guide_detail(request, slug):
     """
     obj = get_object_or_404(Guide.published, slug=slug)
 
-    # (Optional) Verwandte Inhalte für Teaser / Weiterlesen
-    related = (
-        Guide.published.exclude(pk=obj.pk)
-        .prefetch_related("categories")
-        .order_by("-published_at")[:6]
-    )
+    # Verwandte Inhalte für Teaser / Weiterlesen
+    related_qs = related_guides(obj, limit=6)
+    related = [to_teaser_item(g, "guide") for g in related_qs]
 
     ctx = {
         "object": obj,

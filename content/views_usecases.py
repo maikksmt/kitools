@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.utils.translation import gettext as _
 
 from .models import UseCase
+from .services import related_usecases, to_teaser_item
 
 
 def usecase_list(request):
@@ -42,12 +43,9 @@ def usecase_detail(request, slug):
     """
     obj = get_object_or_404(UseCase.published, slug=slug)
 
-    # (Optional) ähnliche Cases anhand Persona
-    similar = (
-        UseCase.published.exclude(pk=obj.pk)
-        .filter(persona__iexact=obj.persona)
-        .order_by("-published_at")[:6]
-    )
+    # ähnliche Cases anhand Persona
+    similar_qs = related_usecases(obj, limit=6)
+    similar = [to_teaser_item(u, "usecase") for u in similar_qs]
 
     ctx = {
         "object": obj,
