@@ -136,7 +136,7 @@ Mit dem Einreichen eines Beitrags stimmst du folgenden Punkten zu:
 
 - **Bugs oder Feature-Wünsche:** GitHub Issues
 - **Diskussionen & Feedback:** GitHub Discussions (wenn aktiviert)
-- **Kontakt:** maik.kusmat@example.com
+- **Kontakt:** maik.kusmat [at] me.com
 
 ---
 
