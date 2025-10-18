@@ -16,11 +16,13 @@ django-redis==6.0.0
 django-taggit==6.1.0
 django-timezone-field==7.1
 djangorestframework==3.16.1
+heroicons==2.13.0
 kombu==5.5.4
 packaging==25.0
 pilkit==3.0
 pillow==12.0.0
 prompt_toolkit==3.0.52
+psycopg==3.2.10
 python-crontab==3.3.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.1

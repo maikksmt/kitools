@@ -47,7 +47,7 @@ urlpatterns += i18n_patterns(
     path("guides/", include("content.urls_guides")),
     path("prompts/", include("content.urls_prompts")),
     path("use-cases/", include("content.urls_usecases")),
-    path("vergleiche/", include("compare.urls")),
+    path("compare/", include("compare.urls")),
     path("newsletter/", include("newsletter.urls")),
     # path("api/", include("api.urls")),
 )
