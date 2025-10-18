@@ -133,5 +133,5 @@ uploads/
 migrations_backup/
 
 # Ignore generated migration files except init
-**/migrations/*
-!**/migrations/__init__.py
+#**/migrations/*
+#!**/migrations/__init__.py
