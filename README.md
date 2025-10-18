@@ -194,3 +194,28 @@ verlangen.
 
 - Das Projekt befindet sich aktuell in der Entwicklung.
 - Ein Release termin ist noch nicht bekannt
+
+---
+
+## 📜 Lizenz
+
+Der Quellcode von **KI Tools Web** steht unter der
+[PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0/).
+
+Das bedeutet:
+
+- 🔍 Der Code darf eingesehen und zu **nicht-kommerziellen Zwecken** genutzt werden.
+- 🤝 Beiträge (Pull Requests, Issues) sind willkommen.
+- 💼 **Kommerzielle oder private Wiederverwendung** ist **nicht gestattet**.
+
+Für eine kommerzielle Lizenz oder andere Nutzungsrechte:
+> maik.kusmat@me.com
+
+📄 Weitere rechtliche Hinweise findest du in der Datei [NOTICE.txt](NOTICE.txt).
+
+---
+
+## 📧 Kontakt / Mitwirken
+
+- Ideen, Feedback oder Beiträge sind willkommen!
+- Erstelle einfach ein **Issue** oder einen **Pull-Request** auf GitHub.

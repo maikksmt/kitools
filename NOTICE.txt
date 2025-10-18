@@ -1,0 +1,27 @@
+KI TOOLS WEB – NOTICE
+=====================
+
+Project: KI Tools Web
+Author:  Maik Kusmat
+Year:    2025
+Website: https://github.com/<dein-github-username>/kitools-web
+License: PolyForm Noncommercial License 1.0.0
+License URL: https://polyformproject.org/licenses/noncommercial/1.0.0/
+
+------------------------------------------------------------
+
+KI Tools Web is a source-available web platform for exploring and
+comparing AI tools, use cases, and guides. The software and its
+documentation are made publicly visible to encourage learning,
+collaboration, and noncommercial contribution.
+
+Commercial use, redistribution, or inclusion of this software in
+any paid or proprietary product or service is not permitted without
+explicit written permission from the author.
+
+All contributions submitted to this repository are accepted under
+the same PolyForm Noncommercial License.
+
+------------------------------------------------------------
+
+© 2025 Maik Kusmat. All rights reserved.
