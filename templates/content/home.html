@@ -1,17 +1,11 @@
 {% extends "base.html" %}
-{% load i18n %}
-{% load static %}
+{% load i18n static %}
 
-{% block title %}{{ seo.title }}{% endblock %}
-{% block meta_extra %}
-    <link rel="canonical" href="{{ seo.canonical }}">
-    <meta name="description" content="{{ seo.description }}">
-{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-
     <!-- Hero / Intro -->
-    <section class="container mx-auto px-4 mt-8">
+    <section class="container mx-auto px-4 mt-4">
         <div class="hero rounded-2xl bg-base-200">
             <div class="hero-content py-10">
                 <div>
@@ -24,34 +18,118 @@
                             deinen Alltag.
                         {% endblocktrans %}
                     </p>
-                    <div class="mt-6 flex flex-wrap gap-3">
-                        <a href="/tools/" class="btn btn-primary">
-                            {% heroicon_solid "squares-2x2" size=20 class="mr-2" %}{% trans "Zum Katalog" %}
-                        </a>
-                        <a href="/compare/" class="btn btn-outline">
-                            {% heroicon_solid "adjustments-vertical" size=20 class="mr-2" %}{% trans "Vergleiche" %}
-                        </a>
-                    </div>
+                    {#                    <div class="mt-6 flex flex-wrap gap-3">#}
+                    {#                        <a href="{% url 'catalog:home' %}" class="btn btn-primary">#}
+                    {#                            {% heroicon_solid "squares-2x2" size=20 class="mr-2" %}{% trans "Zum Katalog" %}#}
+                    {#                        </a>#}
+                    {#                        <a href="{% url 'compare:index' %}" class="btn btn-outline">#}
+                    {#                            {% heroicon_solid "adjustments-vertical" size=20 class="mr-2" %}{% trans "Vergleiche" %}#}
+                    {#                        </a>#}
+                    {#                    </div>#}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Starter-Guide Karte -->
+    <section class="container mx-auto px-4 mt-4">
+        <div class="card bg-base-100 border rounded-2xl shadow-lg items-center">
+            <div class="card-body max-w-4xl">
+                <h2 class="card-title text-xl">Neu in KI? Starte hier</h2>
+                <p class="opacity-80 mt-1">
+                    Der Starter-Guide führt dich Schritt für Schritt in das Thema Künstliche Intelligenz ein –
+                    leicht verständlich und praxisnah. Ideal für Einsteiger ohne Vorwissen.
+                </p>
+                <div class="card-actions mt-4">
+                    <a href="{% url 'starter:index' %}" class="btn btn-primary">
+                        Zum Starter-Guide
+                    </a>
+                    <a href="{% url 'starter:intro' %}" class="btn btn-outline">
+                        3-Fragen-Check ( optional )
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Einstiegskarten -->
-    <section class="container mx-auto px-4 mt-10">
+    <section class="container mx-auto px-4 mt-4">
         <h2 class="text-xl font-semibold mb-4">{% trans "Direkteinstieg" %}</h2>
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {% for c in entry_cards %}
                 {% include "content/partials/_entry_card.html" with card=c %}
             {% endfor %}
         </div>
     </section>
 
+    <!-- Featured Tools -->
+    {% if featured_tools %}
+        <section class="container mx-auto px-4 mt-8">
+            <h2 class="text-xl font-semibold mb-4">{% trans "Empfohlene Tools" %}</h2>
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {% for t in featured_tools %}
+                    <a href="{% url 'catalog:tool_detail' slug=t.slug %}"
+                       class="card bg-base-100 border rounded-2xl hover:shadow-xl transition-shadow h-full">
+                        <div class="card-body">
+                            <div class="flex items-center gap-3">
+                                {% if t.logo %}
+                                    <div class="avatar">
+                                        <div class="w-10 h-10 rounded-full ring-1 ring-base-300">
+                                            <img src="{{ t.logo.url }}" alt="{{ t.name }}">
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="w-10 h-10 rounded-full bg-base-200 grid place-items-center">
+                                        {% heroicon_solid "bolt" size=18 class="opacity-70" %}
+                                    </div>
+                                {% endif %}
+                                <div>
+                                    <h3 class="font-semibold leading-tight">{{ t.name }}</h3>
+                                    {% if t.vendor %}<p class="text-xs opacity-70">{{ t.vendor }}</p>{% endif %}
+                                </div>
+                            </div>
+                            {% if t.short_desc %}
+                                <p class="text-sm opacity-80 mt-3 line-clamp-2">{{ t.short_desc }}</p>{% endif %}
+                            <div class="card-actions mt-4">
+                                <span class="btn btn-sm btn-primary">{% trans "Details" %}</span>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+    <!-- Personalisierte Empfehlungen -->
+    {% if recommended_items %}
+        <section class="container mx-auto px-4 mt-8">
+            <h2 class="text-xl font-semibold mb-4">{% trans "Empfohlen für dich" %}</h2>
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {% for item in recommended_items %}
+                    {% include "content/partials/_teaser_card.html" with item=item %}
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+
+
     <!-- Aktuelle Inhalte -->
-    <section class="container mx-auto px-4 mt-12 mb-16">
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-semibold">{% trans "Aktuelle Artikel & Guides" %}</h2>
-            <a href="/content/" class="link link-primary">{% trans "Alle anzeigen" %}</a>
+    <section class="container mx-auto px-4 mt-8">
+        <div class="flex items-center justify-start mb-4">
+            <h2 class="text-xl font-semibold">{% trans "Aktuelle Inhalte" %}</h2>
+            &nbsp;
+            <h2 class="text-xl font-semibold">(</h2>
+            <h2 class="text-xl font-semibold"><a href="{% url 'guides:list' %}"
+                                                 class="link link-primary">{% trans "Leitfäden" %}</a></h2>
+            &nbsp;&#8226;&nbsp;
+            <h2 class="text-xl font-semibold"><a href="{% url 'prompts:list' %}"
+                                                 class="link link-primary">{% trans "Prompts" %}</a></h2>
+            &nbsp;&#8226;&nbsp;
+            <h2 class="text-xl font-semibold"><a href="{% url 'usecases:list' %}"
+                                                 class="link link-primary">{% trans "Anwendungsfälle" %}</a></h2>
+            &nbsp;
+            <h2 class="text-xl font-semibold">)</h2>
         </div>
 
         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -65,16 +143,7 @@
             {% endfor %}
         </div>
     </section>
-    {% if recommended_items %}
-        <section class="container mx-auto px-4 mt-10">
-            <h2 class="text-xl font-semibold mb-4">{% trans "Empfohlen für dich" %}</h2>
-            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {% for item in recommended_items %}
-                    {% include "content/partials/_teaser_card.html" with item=item %}
-                {% endfor %}
-            </div>
-        </section>
-    {% endif %}
+
 
 
 {% endblock %}

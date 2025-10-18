@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ guide.title }}{% endblock %}
+{% block content %}
+    <section class="container mx-auto px-4 mt-8">
+        <header class="mb-6">
+            <h1 class="text-2xl font-bold">{{ guide.hero_title|default:guide.title }}</h1>
+            {% if guide.hero_subtitle %}<p class="opacity-80 mt-2">{{ guide.hero_subtitle }}</p>{% endif %}
+            <div class="flex gap-3 mt-4">
+                <a class="btn btn-primary"
+                   href="{% url 'starter:intro' %}">{% trans "Kurzer Fragen-Check (optional)" %}</a>
+                <a class="btn btn-outline" href="#curriculum">{% trans "Direkt zum Leitfaden" %}</a>
+            </div>
+        </header>
+
+        {% if guide.intro %}<p class="mb-8 opacity-80">{{ guide.intro }}</p>{% endif %}
+
+        <section id="curriculum" class="grid gap-6">
+            {% for section in guide.sections.all %}
+                <div class="bg-base-100 border rounded-2xl">
+                    <div class="p-5">
+                        <h2 class="text-xl font-semibold">{{ section.title }}</h2>
+                        {% if section.body %}<p class="opacity-80 mt-1">{{ section.body }}</p>{% endif %}
+                    </div>
+                    <div class="grid gap-4 p-5 pt-0 sm:grid-cols-2 lg:grid-cols-3">
+                        {% for it in section.items.all %}
+                            {% if it.is_published %}
+                                <a href="{{ it.get_url }}"
+                                   class="card bg-base-100 border hover:shadow-xl transition h-full">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-base leading-snug">{{ it.get_title }}</h3>
+                                        {% if it.get_teaser %}
+                                            <p class="text-sm opacity-80 mt-1 line-clamp-3">{{ it.get_teaser }}</p>{% endif %}
+                                    </div>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+
+        <div id="personalized" class="mt-10 hidden">
+            <h2 class="text-xl font-semibold mb-3">{% trans "Dein angepasster Start" %}</h2>
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" id="personalized-cards"></div>
+        </div>
+    </section>
+
+    <script>
+        // Zeige optionale clientseitige Empfehlungen (aus Intro) – nur localStorage
+        try {
+            const rec = JSON.parse(localStorage.getItem("ktw_starter_recs") || "[]");
+            if (rec.length) {
+                document.getElementById("personalized").classList.remove("hidden");
+                const wrap = document.getElementById("personalized-cards");
+                rec.slice(0, 6).forEach(item => {
+                    const a = document.createElement("a");
+                    a.className = "card bg-base-100 border hover:shadow-xl transition";
+                    a.href = item.url;
+                    a.innerHTML = `<div class="card-body"><h3 class="card-title">${item.title}</h3><p class="opacity-80">${item.teaser || ""}</p></div>`;
+                    wrap.appendChild(a);
+                });
+            }
+        } catch (e) {
+        }
+    </script>
+{% endblock %}

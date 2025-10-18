@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Kurzer Fragen-Check" %}{% endblock %}
+{% block content %}
+    <section class="container mx-auto px-4 mt-8">
+        <h1 class="text-2xl font-bold mb-4">{% trans "Kurzer Fragen-Check" %}</h1>
+        <p class="opacity-80 mb-6">{% trans "Beantworte 3 Fragen, um Vorschläge für deinen Start zu bekommen. Deine Antworten werden nur lokal in deinem Browser gespeichert." %}</p>
+
+        <form id="qform" class="grid gap-6 max-w-2xl">
+            <div>
+                <label class="label">{% trans "Dein Ziel" %}</label>
+                <select name="goal" class="select select-bordered">
+                    <option value="learn-basics">{% trans "Basics verstehen" %}</option>
+                    <option value="productivity">{% trans "Produktiver arbeiten" %}</option>
+                    <option value="automate">{% trans "Automatisieren" %}</option>
+                    <option value="build-product">{% trans "Eigenes Projekt/Produkt" %}</option>
+                </select>
+            </div>
+            <div>
+                <label class="label">{% trans "Vorkenntnisse" %}</label>
+                <select name="level" class="select select-bordered" id="levelSelect">
+                    <option value="starter">{% trans "Starter" %}</option>
+                    <option value="advanced">{% trans "Fortgeschritten" %}</option>
+                    <option value="pro">{% trans "Profi" %}</option>
+                </select>
+            </div>
+            <div>
+                <label class="label">{% trans "Rolle" %}</label>
+                <select name="persona" class="select select-bordered">
+                    <option value="student">{% trans "Schüler/Student" %}</option>
+                    <option value="it-pro">{% trans "IT/Tech-interessiert" %}</option>
+                    <option value="self-employed">{% trans "Selbstständig" %}</option>
+                    <option value="other">{% trans "Sonstiges" %}</option>
+                </select>
+            </div>
+            <div class="flex gap-3">
+                <button type="button" id="run" class="btn btn-primary">{% trans "Vorschläge erzeugen" %}</button>
+                <a href="{% url 'starter:index' %}" class="btn btn-ghost">{% trans "Abbrechen" %}</a>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        const CATALOG = [
+            {
+                id: "basics",
+                tags: ["learn-basics", "starter"],
+                title: "Was ist KI?",
+                url: "#",
+                teaser: "Begriffe und Konzepte verständlich erklärt."
+            },
+            {
+                id: "prompting",
+                tags: ["learn-basics", "starter", "advanced"],
+                title: "Prompting-Grundlagen",
+                url: "#",
+                teaser: "Strukturierte Prompts, Rollen, Beispiele."
+            },
+            {
+                id: "productivity",
+                tags: ["productivity", "starter", "advanced"],
+                title: "Mit KI produktiver werden",
+                url: "#",
+                teaser: "Workflows für Alltag & Beruf."
+            },
+            {
+                id: "automation",
+                tags: ["automate", "advanced", "pro"],
+                title: "Automatisieren mit KI-Tools",
+                url: "#",
+                teaser: "Von einfachen Makros bis Integrationen."
+            },
+            {
+                id: "build",
+                tags: ["build-product", "advanced", "pro"],
+                title: "Eigenes KI-Projekt starten",
+                url: "#",
+                teaser: "Stack, MVP, Evaluierung."
+            },
+        ];
+
+        function pickRecs(goal, level, persona) {
+            let list = CATALOG.filter(c => c.tags.includes(goal));
+            list = list.concat(CATALOG.filter(c => c.tags.includes(level) && !list.includes(c)));
+            const ids = new Set();
+            const out = [];
+            for (const it of list) {
+                if (!ids.has(it.id)) {
+                    ids.add(it.id);
+                    out.push(it);
+                }
+            }
+            return out.slice(0, 6);
+        }
+
+        function setCookie(name, value, days) {
+            const maxAge = days * 24 * 60 * 60;
+            document.cookie = `${name}=${value}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
+        }
+
+        // Preselect level from cookie if present
+        (function () {
+            const m = document.cookie.match(/(?:^|;\s*)ktw_level=([^;]+)/);
+            if (m) {
+                const v = decodeURIComponent(m[1]);
+                const sel = document.getElementById("levelSelect");
+                if (sel) sel.value = v;
+            }
+        })();
+
+        document.getElementById("run").addEventListener("click", () => {
+            const fd = new FormData(document.getElementById("qform"));
+            const goal = fd.get("goal");
+            const level = fd.get("level");
+            const persona = fd.get("persona");
+            const recs = pickRecs(goal, level, persona);
+            localStorage.setItem("ktw_starter_recs", JSON.stringify(recs));
+            setCookie("ktw_level", level, 180);
+            window.location.href = "{% url 'starter:index' %}#personalized";
+        });
+    </script>
+{% endblock %}

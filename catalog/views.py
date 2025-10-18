@@ -41,8 +41,7 @@ def tool_list(request):
     free = request.GET.get("free")
 
     if q:
-        qs = qs.filter(Q(name__icontains=q) | Q(
-            short_description__icontains=q))
+        qs = qs.filter(Q(name__icontains=q) | Q(short_desc__icontains=q) | Q(long_desc__icontains=q))
     if language:
         qs = qs.filter(language_support__icontains=language)
     if free:

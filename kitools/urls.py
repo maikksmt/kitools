@@ -26,7 +26,7 @@ from django.views.generic import TemplateView
 from content.sitemaps import GuideSitemap, PromptSitemap, UseCaseSitemap
 from catalog.sitemaps import ToolSitemap
 from compare.sitemaps import ComparisonSitemap
-from content.views import HomePageView
+from content.views import SetLevelView
 
 sitemaps = {
     "guides": GuideSitemap,
@@ -42,13 +42,15 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path("admin/", admin.site.urls),
-    path("", HomePageView.as_view(), name="home"),
+    path("", include(("content.urls", "content"), namespace="content")),
+    path("set-level/", SetLevelView.as_view(), name="set_level"),
     path("tools/", include("catalog.urls")),  # Home & Tools
     path("guides/", include("content.urls_guides")),
     path("prompts/", include("content.urls_prompts")),
     path("use-cases/", include("content.urls_usecases")),
     path("compare/", include("compare.urls")),
     path("newsletter/", include("newsletter.urls")),
+    path("starter-guide/", include(("starter.urls", "starter"), namespace="starter")),
     # path("api/", include("api.urls")),
 )
 

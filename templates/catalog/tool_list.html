@@ -11,9 +11,9 @@
 
     <header class="mb-6">
         <h1 class="text-3xl font-bold">{% trans "Alle Tools" %}</h1>
-        <form method="get" class="mt-4 grid gap-3 md:grid-cols-3">
+        <form method="get" class="mt-4 grid gap-3 md:grid-cols-4">
             <input type="search" name="q" value="{{ q|default_if_none:'' }}" placeholder="{% trans 'Suchen…' %}"
-                   class="input input-bordered w-full"/>
+                   class="col-span-2 input input-bordered w-full"/>
             <select name="language" class="select select-bordered w-full">
                 <option value="">{% trans "Alle Sprachen" %}</option>
                 {% for lang in available_languages %}

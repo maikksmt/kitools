@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'content',
     'compare',
     'newsletter',
+    'starter',
     'ops',
     'api',
 

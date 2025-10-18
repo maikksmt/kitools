@@ -1,15 +1,23 @@
 {% load i18n %}
-<div class="card bg-base-100 border rounded-2xl">
+<article class="card bg-base-100 border rounded-2xl h-full">
     <div class="card-body">
-        {% if item.badge %}
-            <div class="badge badge-neutral mb-2">{{ item.badge }}</div>
-        {% endif %}
-        <a href="{{ item.url }}" class="card-title text-base hover:link">{{ item.title }}</a>
+        <div class="flex items-center gap-2 text-xs opacity-70 mb-1">
+            {% if item.badge %}<span class="badge badge-outline">{{ item.badge }}</span>{% endif %}
+            {% if item.date %}
+                <time datetime="{{ item.date|date:'c' }}">{{ item.date|date:"d.m.Y" }}</time>
+            {% endif %}
+        </div>
+
+        <h3 class="card-title text-base leading-snug">
+            <a href="{{ item.url }}" class="link link-hover">{{ item.title }}</a>
+        </h3>
+
         {% if item.teaser %}
-            <p class="text-sm opacity-80">{{ item.teaser }}</p>
+            <p class="text-sm opacity-80 mt-1 line-clamp-3">{{ item.teaser }}</p>
         {% endif %}
-        <div class="card-actions justify-end mt-4">
-            <a href="{{ item.url }}" class="btn btn-sm btn-outline">{% trans "Lesen" %}</a>
+
+        <div class="card-actions mt-4">
+            <a href="{{ item.url }}" class="btn btn-sm btn-primary">{% trans "Lesen" %}</a>
         </div>
     </div>
-</div>
+</article>

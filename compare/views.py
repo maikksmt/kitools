@@ -107,6 +107,6 @@ def detail(request, slug):
         "score_rows": score_rows,  # ⟵ für Tabellenkörper
         "related": related,
         "title": obj.title,
-        "crumbs": [(_("Vergleiche"), "/vergleiche/"), (obj.title, request.path)],
+        "crumbs": [(_("Vergleiche"), reverse("compare:index")), (obj.title, request.path)],
     }
     return render(request, "compare/detail.html", context)

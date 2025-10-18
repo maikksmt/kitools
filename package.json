@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tailwindcss -i ./assets/css/input.css -o ./static/css/output.css --watch",
-    "build": "NODE_ENV=production tailwindcss -i ./assets/css/app.css -o ./static/build/app.css --minify"
+    "build": "NODE_ENV=production tailwindcss -i ./assets/css/input.css -o ./static/css/output.css --minify"
   },
   "repository": {
     "type": "git",
